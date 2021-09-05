@@ -1,7 +1,6 @@
 const fUtil = require("../misc/file");
 const stuff = require("./info");
 const http = require("http");
-const { width, height } = require("screenz");
 
 function toAttrString(table) {
 	return typeof table == "object"
@@ -176,12 +175,9 @@ module.exports = function (req, res, url) {
 					apiserver: "/",
 					storePath: process.env.STORE_URL + "/<store>",
 					ut: 30,
-					autostart: 1,
+					autostart: 0,
 					isWide: 1,
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
-					isVideoRecord: 1,
-					playerWidth: width,
-					playerHeight: height,
 				},
 				allowScriptAccess: "always",
 				allowFullScreen: "true",

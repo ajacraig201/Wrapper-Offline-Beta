@@ -147,21 +147,9 @@ if !DEVMODE!==y (
 ) else ( 
 	echo ^(10^) Developer mode is[91m OFF [0m
 )
-:: Headless mode
-if !APPCHROMIUM!==y (
-	echo ^(11^) Headless mode for Chromium is[92m ON [0m
-) else ( 
-	echo ^(11^) Headless mode for Chromium is[91m OFF [0m
-)
-:: Full Screen mode
-if !FULLSCREEN!==y (
-	echo ^(12^) Full screen mode for Chromium is[92m ON [0m
-) else ( 
-	echo ^(12^) Full screen mode for Chromium is[91m OFF [0m
-)
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    echo ^(13^) Original LVM character IDs are[91m OFF [0m
+    echo ^(11^) Original LVM character IDs are[91m OFF [0m
 )
 
 if !DEVMODE!==y (
@@ -327,7 +315,7 @@ if "!choice!"=="?9" (
 	echo However, if you want to see everything the program has to offer, turn this on.
 	goto reaskoptionscreen
 )
-:: Dev mode
+:: Check depends
 if "!choice!"=="10" (
 	set TOTOGGLE=DEVMODE
 	if !DEVMODE!==n (
@@ -347,49 +335,11 @@ if "!choice!"=="?10" (
 	echo The developer settings will be visible both in these settings and in the Wrapper launcher.
 	goto reaskoptionscreen
 )
-:: Headless mode
-if "!choice!"=="11" (
-	set TOTOGGLE=APPCHROMIUM
-	if !APPCHROMIUM!==n (
-		set TOGGLETO=y
-	) else (
-		set TOGGLETO=n
-	)
-	set CFGLINE=24
-	goto toggleoption
-)
-if "!choice!"=="?11" (
-	echo Wrapper: Offline uses an included Chromium that still supports Flash. However, to hide the browser
-	echo aspects of Chromium, Wrapper: Offline usually activates a "headless mode" for Chromium so that things
-	echo like the URL box, the back/forward arrows, the home button and other icons are rendered invisible to the user.
-	echo:
-	echo Turning this off will allow all those icons to be visible to the user. This also makes things like access to
-	echo developer mode without keyboard shortcuts a breeze.
-	goto reaskoptionscreen
-)
-:: Full Screen Mode
-if "!choice!"=="12" (
-	set TOTOGGLE=FULLSCREEN
-	if !FULLSCREEN!==n (
-		set TOGGLETO=y
-	) else (
-		set TOGGLETO=n
-	)
-	set CFGLINE=27
-	goto toggleoption
-)
-if "!choice!"=="?12" (
-	echo Wrapper: Offline has a full-screen mode available which will help improve user experience.
-	echo:
-	echo Turning it on will have the included Chromium start in a full-screen mode, regardless of if
-	echo headless mode is enabled or not. By default it's disabled so as to not pester the user.
-	goto reaskoptionscreen
-)
 
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    if "!choice!"=="13" goto extractchars
-    if "!choice!"=="?13" (
+    if "!choice!"=="11" goto extractchars
+    if "!choice!"=="?11" (
         echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
         echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
         echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,

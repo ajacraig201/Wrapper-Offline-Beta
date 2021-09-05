@@ -683,22 +683,9 @@ popd
 PING -n 6 127.0.0.1>nul
 
 echo Opening Wrapper: Offline...
-pushd utilities\ungoogled-chromium
-if !APPCHROMIUM!==y ( 
-	if !FULLSCREEN!==y (
-		set ARGS=--app=http://localhost:!port! --allow-outdated-plugins --start-fullscreen
-	) else (
-		set ARGS=--app=http://localhost:!port! --allow-outdated-plugins
-	)
-)
-if !APPCHROMIUM!==n ( 
-	if !FULLSCREEN!==y (
-		set ARGS=http://localhost:!port! --allow-outdated-plugins --start-fullscreen
-	) else (
-		set ARGS=http://localhost:!port! --allow-outdated-plugins
-	)
-)
-if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile !args! )
+		pushd utilities\ungoogled-chromium
+		if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile --app=http://localhost:!port! --allow-outdated-plugins )
+
 echo Wrapper: Offline has been started^^! The video list should now be open.
 
 ::::::::::::::::
