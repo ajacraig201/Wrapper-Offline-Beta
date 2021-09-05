@@ -340,8 +340,7 @@ if "!choice!"=="?10" (
 if "!choice!"=="11" (
 	cls
 	echo Wrapper: Offline
-	echo Version !WRAPPER_VER!
-	echo Build !WRAPPER_BLD! ^(!WRAPPER_BRNCH!^)
+	echo Version !WRAPPER_VER! Beta
 	echo:
 	echo This copy of Wrapper: Offline belongs to:
 	if not %FIRST_NAME%==n (
@@ -349,15 +348,16 @@ if "!choice!"=="11" (
 			echo %FULL_NAME% ^(%USERNAME%^)
 		)
 	) else (
-		echo %USERNAME%
+		echo User: %USERNAME%
 	)
 	if not %EMAIL%==n ( echo E-Mail: %EMAIL% )
 	if not %DISCORD%==n ( echo Discord Tag: %DISCORD% )
 	echo Machine ID: %COMPUTERNAME%
 	echo:
-	echo ^(TIP: Interested in registering your copy of W:O under
+	echo ^(DEV TIP: Interested in registering your copy of W:O under
 	echo your name? Open "utilities\metadata.bat" in a text editor and
-	echo edit any of the necessary values to your liking.^)
+	echo edit any of the necessary values to your liking
+	echo this process will be automated in the near future.^)
 	echo:
 	pause
 	goto optionscreen
