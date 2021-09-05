@@ -366,6 +366,8 @@ if "!choice!"=="?11" (
 	echo This option exists to view any software and existing license info
 	echo for this copy of Wrapper: Offline. It helps show the user if they're
 	echo running the beta build or the stable build.
+	goto reaskoptionscreen
+)
 :: Character solid archive
 if exist "server\characters\characters.zip" (
     if "!choice!"=="12" goto extractchars
