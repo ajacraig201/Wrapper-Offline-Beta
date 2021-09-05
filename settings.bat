@@ -47,7 +47,6 @@ if exist "patch.jpg" echo MESSAGE GOES HERE && goto end
 set CFG=utilities\config.bat
 set TMPCFG=utilities\tempconfig.bat
 set META=utilities\metadata.bat
-set TMPMETA=utilities\tempmetadata.bat
 set ENV=wrapper\env.json
 set BACKTODEFAULTTOGGLE=n
 set CHROMIUMENABLE=n
@@ -160,13 +159,9 @@ if !FULLSCREEN!==y (
 ) else ( 
 	echo ^(12^) Full screen mode for Chromium is[91m OFF [0m
 )
-:: Register your copy
-echo ^(13^) Register your copy of Wrapper: Offline
-:: View software info
-echo ^(14^) View software information
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    echo ^(15^) Original LVM character IDs are[91m OFF [0m
+    echo ^(13^) Original LVM character IDs are[91m OFF [0m
 )
 
 if !DEVMODE!==y (
@@ -390,79 +385,11 @@ if "!choice!"=="?12" (
 	echo headless mode is enabled or not. By default it's disabled so as to not pester the user.
 	goto reaskoptionscreen
 )
-:: Register Copy
-if "!choice!"=="13" (
-	echo What is your first name?
-	set /p FIRSTNAME= First Name: 
-	set TOTOGGLE=FIRST_NAME
-	set TOGGLETO=%FIRSTNAME%
-	set CFGLINE=15
-	goto togglemeta
-	echo What is your last name?
-	set /p LASTNAME: Last Name: 
-	set TOTOGGLE=LAST_NAME
-	set TOGGLETO=%LASTNAME%
-	set CFGLINE=16
-	goto togglemeta
-	echo What is your email address? ^(Optional, press Enter to skip.^)
-	set /p MAIL: Email Address: 
-	set TOTOGGLE=EMAIL
-	set TOGGLETO=%MAIL%
-	set CFGLINE=18
-	goto togglemeta
-	echo What is your Discord tag? ^(Optional, press Enter to skip.^)
-	set /p DISCORDTAG: Discord Tag: 
-	set TOTOGGLE=DISCORD
-	set TOGGLETO=%DISCORDTAG%
-	set CFGLINE=19
-	goto togglemeta
-	echo Your copy of Wrapper: Offline has been registered under your name.
-	pause & cls & goto optionscreen
-)
-if "!choice!"=="?13" (
-	echo Wrapper: Offline now has a feature that allows you to register your
-	echo own copy under your full name, and optionally your email and/or Discord 
-	echo tag.
-	echo:
-	echo Registering Wrapper: Offline will make it easier so that if anyone else
-	echo uses your machine or you give them your copy, they know that this is your copy.
-	goto reaskoptionscreen
-)
-:: Software info
-if "!choice!"=="14" (
-	echo Wrapper: Offline
-	echo Version !WRAPPER_VER!
-	echo Build !WRAPPER_BLD!
-	echo:
-	echo This copy of Wrapper: Offline belongs to:
-	if not %FIRST_NAME%==n (
-		if not %LAST_NAME%==n (
-			echo %FULL_NAME% ^(%USERNAME%^)
-		)
-	) else (
-		echo %USERNAME%
-	)
-	if not %EMAIL%==n (
-		echo E-Mail: %EMAIL%
-	)
-	if not %DISCORD%==n (
-		echo Discord Tag: %DISCORD%
-	)
-	echo Machine ID: %COMPUTERNAME%
-	echo:
-	pause & cls & goto optionscreen
-)
-if "!choice!"=="?14" (
-	echo This views the version number, build number and copy info ^(if there is any^) of
-	echo Wrapper: Offline. Nuff said.
-	goto reaskoptionscreen
-)
-	
 
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    if "!choice!"=="15" goto extractchars
-    if "!choice!"=="?15" (
+    if "!choice!"=="13" goto extractchars
+    if "!choice!"=="?13" (
         echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
         echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
         echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,
@@ -566,34 +493,6 @@ if !BACKTODEFAULTTOGGLE!==y goto backtodefault
 if !BACKTOCUSTOMTOGGLE!==y goto backtocustom
 if !BACKTOCUSTOMTOGGLE2!==y goto backtocustom2
 goto optionscreen
-
-:::::::::::::::::::::
-:: Toggle metadata ::
-:::::::::::::::::::::
-:togglemeta
-echo Adding to metadata...
-:: Find line after setting to edit
-set /a AFTERLINE=!cfgline!+1
-:: Loop through every line until one to edit
-if exist !tmpmeta! del !tmpmeta!
-set /a count=1
-for /f "tokens=1,* delims=0123456789" %%a in ('find /n /v "" ^< !meta!') do (
-	set "line=%%b"
-	>>!tmpcfg! echo(!line:~1!
-	set /a count+=1
-	if !count! GEQ !cfgline! goto linereached1
-)
-:linereached1
-:: Overwrite the original setting
-echo set !totoggle!=!toggleto!>> !tmpmeta!
-echo:>> !tmpmeta!
-:: Print the last of the config to our temp file
-more +!afterline! !cfg!>> !tmpmeta!
-:: Make our temp file the normal file
-copy /y !tmpmeta! !meta! >nul
-del !tmpmeta!
-:: Set in here for displaying
-set !totoggle!=!toggleto!
 
 :: Change port number for frontend of Wrapper: Offline (dev option)
 :changeportnumber
