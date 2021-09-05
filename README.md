@@ -52,7 +52,7 @@ Wrapper: Offline credits:
 
 | Name                             | Contribution                                                                                                                                         |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Benson (D)                       | Wrapper: Offline                                                                                                                                     |
+| Benson (D)                       | Former Leader & Creator of Wrapper: Offline                                                                                                                                     |
 | Poley Magik                      | CC Toon adventure, Expanded Color Palette, Head props and wearables and much more.                                                                   |
 | NathanSaturnBOI                  | Logo                                                                                                                                                 |
 | VisualPlugin (C)                 | Text to speech voices, background importing, tons of bug fixes and more                                                                              |
@@ -60,7 +60,7 @@ Wrapper: Offline credits:
 | **xomdjl_** (D)         	   | export script, pick a theme page, implementing the Flashpoint version of Basilisk browser, TTS voices and more |       
 | creepyjokes2000 (D)        	   | Waveform fix, improved actions                                                                                                                       |
 | JoshAnimate                 	   | Headgear fix                                                                                                                                         |                                                                  |
-| GoTest334 (D)                    | Leader of the Wrapper: Offline Team.                                                                                                           |
+| GoTest334 (D)                    | Current Leader of the Wrapper: Offline Team.                                                                                                           |
 | The Invincible Sphynx Cat (B)    | Beta testing, suggestions, remastered GoAnimate tracks (provided separately, not included)                                                           |	
 | MJ, the Spirit (D) (B)	   | Facial expression fix, video/imported asset backup tool, action pack tool creator, bug fixes                                                         |
 | MegaT (C)                        | CC browser code                                                                                                                                      |                                                                            |
