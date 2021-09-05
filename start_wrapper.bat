@@ -733,6 +733,7 @@ echo Enter 4 to open the server page
 echo Enter 5 to export a video
 echo Enter 6 to Update W:O using git
 echo Enter 7 to open the backup/restore tool
+echo Enter 8 to view software info
 echo Enter ? to open the FAQ
 echo Enter clr to clean up the screen
 echo Enter 0 to close Wrapper: Offline
@@ -766,6 +767,7 @@ if "!choice!"=="4" goto open_server
 if "!choice!"=="5" goto start_exporter
 if "!choice!"=="6" goto updategit
 if "!choice!"=="7" goto backupandrestore
+if "!choice!"=="8" goto verinfo
 if "!choice!"=="?" goto open_faq
 if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
@@ -830,6 +832,30 @@ pushd utilities
 start backup_and_restore.bat
 popd
 goto wrapperidle
+
+:verinfo
+cls
+echo Wrapper: Offline
+echo Version !WRAPPER_VER!
+echo Build !WRAPPER_BLD!
+echo:
+echo This copy of Wrapper: Offline belongs to:
+if not %FIRST_NAME%==n (
+	if not %LAST_NAME%==n (
+		echo %FULL_NAME% ^(%USERNAME%^)
+	)
+) else (
+	echo %USERNAME%
+)
+if not %EMAIL%==n (
+	echo E-Mail: %EMAIL%
+)
+if not %DISCORD%==n (
+	echo Discord Tag: %DISCORD%
+)
+echo Machine ID: %COMPUTERNAME%
+echo:
+pause & goto wrapperstartedcls
 
 :settings
 echo Launching settings..
