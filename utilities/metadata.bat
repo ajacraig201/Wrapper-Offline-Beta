@@ -11,9 +11,3 @@ endlocal
 set WRAPPER_VER=1.3.0
 set WRAPPER_BLD=10
 
-:: Custom stuff
-set FIRST_NAME=n
-set LAST_NAME=n
-set FULL_NAME=%FIRST_NAME% %LAST_NAME%
-set EMAIL=n
-set DISCORD=n

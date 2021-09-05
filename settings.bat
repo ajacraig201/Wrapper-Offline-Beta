@@ -392,43 +392,30 @@ if "!choice!"=="?12" (
 )
 :: Register Copy
 if "!choice!"=="13" (
-	echo Let's get started with the registration process.
-	if %FIRST_NAME%==n (
-		echo What is your first name?
-		set /p FIRSTNAME= First Name: 
-		set TOTOGGLE=FIRST_NAME
-		set TOGGLETO=%FIRSTNAME%
-		set CFGLINE=15
-		goto togglemeta
-	)
-	:step2
-	if %LAST_NAME%==n (
-		echo What is your last name?
-		set /p LASTNAME: Last Name: 
-		set TOTOGGLE=LAST_NAME
-		set TOGGLETO=%LASTNAME%
-		set CFGLINE=16
-		goto togglemeta
-	)
-	:step3
-	if %EMAIL%==n (
-		echo What is your email address? ^(Optional, press Enter to skip.^)
-		set /p MAIL: Email Address: 
-		set TOTOGGLE=EMAIL
-		set TOGGLETO=%MAIL%
-		set CFGLINE=18
-		goto togglemeta
-	)
-	:step4
-	if %DISCORD%==n (
-		echo What is your Discord tag? ^(Optional, press Enter to skip.^)
-		set /p DISCORDTAG: Discord Tag: 
-		set TOTOGGLE=DISCORD
-		set TOGGLETO=%DISCORDTAG%
-		set CFGLINE=19
-		goto togglemeta
-	)
-	:finishreg
+	echo What is your first name?
+	set /p FIRSTNAME= First Name: 
+	set TOTOGGLE=FIRST_NAME
+	set TOGGLETO=%FIRSTNAME%
+	set CFGLINE=15
+	goto togglemeta
+	echo What is your last name?
+	set /p LASTNAME: Last Name: 
+	set TOTOGGLE=LAST_NAME
+	set TOGGLETO=%LASTNAME%
+	set CFGLINE=16
+	goto togglemeta
+	echo What is your email address? ^(Optional, press Enter to skip.^)
+	set /p MAIL: Email Address: 
+	set TOTOGGLE=EMAIL
+	set TOGGLETO=%MAIL%
+	set CFGLINE=18
+	goto togglemeta
+	echo What is your Discord tag? ^(Optional, press Enter to skip.^)
+	set /p DISCORDTAG: Discord Tag: 
+	set TOTOGGLE=DISCORD
+	set TOGGLETO=%DISCORDTAG%
+	set CFGLINE=19
+	goto togglemeta
 	echo Your copy of Wrapper: Offline has been registered under your name.
 	pause & cls & goto optionscreen
 )
@@ -474,8 +461,8 @@ if "!choice!"=="?14" (
 
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    if "!choice!"=="14" goto extractchars
-    if "!choice!"=="?14" (
+    if "!choice!"=="15" goto extractchars
+    if "!choice!"=="?15" (
         echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
         echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
         echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,
@@ -580,6 +567,34 @@ if !BACKTOCUSTOMTOGGLE!==y goto backtocustom
 if !BACKTOCUSTOMTOGGLE2!==y goto backtocustom2
 goto optionscreen
 
+:::::::::::::::::::::
+:: Toggle metadata ::
+:::::::::::::::::::::
+:togglemeta
+echo Adding to metadata...
+:: Find line after setting to edit
+set /a AFTERLINE=!cfgline!+1
+:: Loop through every line until one to edit
+if exist !tmpmeta! del !tmpmeta!
+set /a count=1
+for /f "tokens=1,* delims=0123456789" %%a in ('find /n /v "" ^< !meta!') do (
+	set "line=%%b"
+	>>!tmpcfg! echo(!line:~1!
+	set /a count+=1
+	if !count! GEQ !cfgline! goto linereached1
+)
+:linereached1
+:: Overwrite the original setting
+echo set !totoggle!=!toggleto!>> !tmpmeta!
+echo:>> !tmpmeta!
+:: Print the last of the config to our temp file
+more +!afterline! !cfg!>> !tmpmeta!
+:: Make our temp file the normal file
+copy /y !tmpmeta! !meta! >nul
+del !tmpmeta!
+:: Set in here for displaying
+set !totoggle!=!toggleto!
+
 :: Change port number for frontend of Wrapper: Offline (dev option)
 :changeportnumber
 echo Which port number would you like to change the frontend to?
@@ -637,39 +652,7 @@ set TOTOGGLE=PORT
 set TOGGLETO=!PORTNUMBER!
 set CFGLINE=21
 goto toggleoption
-
-:::::::::::::::::::::
-:: Toggle metadata ::
-:::::::::::::::::::::
-:togglemeta
-echo Adding to metadata...
-:: Find line after setting to edit
-set /a AFTERLINE=!cfgline!+1
-:: Loop through every line until one to edit
-if exist !tmpmeta! del !tmpmeta!
-set /a count=1
-for /f "tokens=1,* delims=0123456789" %%a in ('find /n /v "" ^< !meta!') do (
-	set "line=%%b"
-	>>!tmpmeta! echo(!line:~1!
-	set /a count+=1
-	if !count! GEQ !cfgline! goto linereached1
-)
-:linereached1
-:: Overwrite the original setting
-echo set !totoggle!=!toggleto!>> !tmpmeta!
-echo:>> !tmpmeta!
-:: Print the last of the config to our temp file
-more +!afterline! !meta!>> !tmpmeta!
-:: Make our temp file the normal file
-copy /y !tmpmeta! !meta! >nul
-del !tmpmeta!
-:: Set in here for displaying
-set !totoggle!=!toggleto!
-echo Added.
-if %LAST_NAME%==n ( goto step2 )
-if %EMAIL%==n ( goto step3 )
-if %DISCORD%==n ( goto step4 )
-goto finishreg
+	
 
 :::::::::::::::::::::::::
 :: Truncated Themelist ::
