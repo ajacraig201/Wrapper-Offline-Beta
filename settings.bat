@@ -390,7 +390,6 @@ if "!choice!"=="?12" (
 )
 :: Software info
 if "!choice!"=="13" (
-	cls
 	echo Wrapper: Offline
 	echo Version !WRAPPER_VER!
 	echo Build !WRAPPER_BLD!
