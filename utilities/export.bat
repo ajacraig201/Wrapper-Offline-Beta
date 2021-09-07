@@ -12,13 +12,15 @@ if exist "..\patch.jpg" echo there's no videos to export if whoppers patched && 
 
 :restart
 :: Sets all variables to default, also makes it so that it can properly load config.bat
+set /A rnd=%RANDOM% * 180 / 32768 + 1
+set CONT=n
 set ERROR=n
 set OUTRO=1
 set TEMPPATH=%CD%\misc\temp\rewriteable.mp4
 set TEMPPATH2=%CD%\misc\temp\rewriteable.ts
 set TEMPPATH3=%CD%\misc\temp\rewriteable2.ts
 set TEMPFILEPATH=%CD%\misc\temp
-set FFMPEGINPUT=%CD%\misc\temp\rewriteable.avi
+set FFMPEGINPUT=%CD%\misc\temp\reusable.mp4
 set OUTRO169=%CD%\misc\Outro16by9.ts
 set OUTRO149=%CD%\misc\Outro14by9.ts
 set VOLUME=1.5
@@ -39,7 +41,9 @@ set FINDMOVIEIDCHOICE=""
 set CONTFAILRENDER=""
 set BROWSERCHOICE=""
 set VF=""
-set ISVIDEOWIDE=0
+set ISVIDEOWIDE=1
+set WIDTH=1920
+set HEIGHT=1080
 if not exist "ffmpeg\ffmpeg.exe" ( goto error )
 if not exist "avidemux\avidemux.exe" ( goto error )
 if "%RESTARTVALUE%"=="1" (
@@ -61,7 +65,6 @@ pause
 exit
 
 :error2
-set CONTFAILRENDER=0
 echo There's a problem there, actually.
 echo:
 echo One or more of the rewriteables don't exist, and
@@ -71,6 +74,7 @@ echo We'll just continue normally.
 echo:
 pause
 echo:
+set CONTFAILRENDER=0
 goto findMovieId
 
 :noerror
@@ -104,10 +108,8 @@ if "%ERRORLEVEL%"=="0" (
 echo First, let's look for your movie ID.
 echo:
 echo Press 1 to find it in the _SAVED folder
-echo Press 2 to find it in the video list on your default browser
-echo Press 3 to find it in the video list on the included Chromium
-echo Press 4 to find it in the video list on the included Basilisk
-echo Press 5 if you already have your movie ID ready
+echo Press 2 to find it in the video list on the included Chromium
+echo Press 3 if you already have your movie ID ready
 echo:
 :MovieChoice
 set /p FINDMOVIEIDCHOICE= Choice:
@@ -121,72 +123,86 @@ if "%FINDMOVIEIDCHOICE%"=="1" (
 	start explorer.exe "..\wrapper\_SAVED\"
 	echo:
 	echo Please enter your movie ID when found.
-	echo It should be in this format: m-%RANDOM%
+	echo It should be in this format: m-%rnd%
 	echo:
 	echo IMPORTANT: DO NOT INCLUDE ".xml" OR THE ZEROS
 	echo IN THE INPUT. MAKE SURE TO SHORTEN "movie" TO "m" TOO.
 	echo:
 	set /p MOVIEID= Movie ID: 
-) else if "%FINDMOVIEIDCHOICE%"=="2" (
-	echo:
-	echo Opening the video list in your default browser...
-	start http://localhost:%PORT%
-	echo:
-	echo Please enter your movie ID when found.
-	echo It should be in this format: m-%RANDOM%
-	echo:
-	set /p MOVIEID= Movie ID: 
-) else if "%FINDMOVIEIDCHOICE%"=="3" (
+	if exist "..\wrapper\_SAVED\movie-*%MOVIEID:~2%.xml" (
+		echo Movie exists.
+	) else (
+		echo Movie does not exist. Please try again.
+		goto findMovieId
+	)
+)
+if "%FINDMOVIEIDCHOICE%"=="2" (
 	echo:
 	echo Opening the video list in the included Chromium...
 	start ungoogled-chromium\chromium.exe --allow-outdated-plugins --app="http://localhost:%PORT%"
 	echo:
 	echo Please enter your movie ID when found.
-	echo It should be in this format: m-%RANDOM%
+	echo It should be in this format: m-%rnd%
 	echo:
 	set /p MOVIEID= Movie ID: 
-) else if "%FINDMOVIEIDCHOICE%"=="4" (
-	echo:
-	echo Opening the video list in the included Basilisk...
-	start basilisk\Basilisk-Portable\Basilisk-Portable.exe http://localhost:%PORT%
-	echo:
-	echo Please enter your movie ID when found.
-	echo It should be in this format: m-%RANDOM%
-	echo:
-	set /p MOVIEID= Movie ID: 
-) else if "%FINDMOVIEIDCHOICE%"=="5" (
+	if exist "..\wrapper\_SAVED\movie-*%MOVIEID:~2%.xml" (
+		echo Movie exists.
+	) else (
+		echo Movie does not exist. Please try again.
+		goto findMovieId
+	)
+)
+if "%FINDMOVIEIDCHOICE%"=="3" (
 	echo:
 	echo Please enter your movie ID.
-	echo It should be in this format: m-%RANDOM%
+	echo It should be in this format: m-%rnd%
 	echo:
 	set /p MOVIEID= Movie ID: 
-) else (
+	if exist "..\wrapper\_SAVED\movie-*%MOVIEID:~2%.xml" (
+		echo Movie exists.
+		PING -n 5 127.0.0.1>nul
+	) else (
+		echo Movie does not exist. Please try again.
+		goto findMovieId
+	)
+)
+if "%FINDMOVIEIDCHOICE%"=="" (
 	echo You must choose a valid option.
 	echo:
 	goto MovieChoice
 )
+echo:
+goto point_insertion
 
-echo:
-echo Are you continuing a failed render?
-echo:
-echo Press 1 if you are.
-echo Otherwise, press 0.
-echo:
-set /p CONTFAILRENDER= Response:
-echo:
-cls
-
-if "%CONTFAILRENDER%"=="1" (
-	if not exist "%FFMPEGINPUT%" (
-		if not exist "%TEMPPATH%" (
-			goto error2
+:point_insertion
+if exist "%TEMPPATH%" (
+	set CONT=y
+	echo Some files left over from a crash or from a previous session were detected.
+	echo:
+	echo Are you continuing a failed render?
+	echo:
+	echo Press 1 if you are.
+	echo Press 2 if you're starting over from scratch.
+	echo:
+	:contfailrendertry
+	set /p CONTFAILRENDER= Response:
+	echo:
+	if "%CONTFAILRENDER%"=="" ( echo Invalid option. Please try again. & goto contfailrendertry )
+	if "%CONTFAILRENDER%"=="1" ( goto screen_recorder_setup )
+	if "%CONTFAILRENDER%"=="2" (
+		echo Deleting any temporary files...
+		for %%i in (%TEMPPATH%,%TEMPPATH2%,%TEMPPATH3%) do (
+			if exist "%%i" ( del "%%i" )
 		)
-	) else (
-	goto render_step_ask
+		del /s /q "%CD%\misc\temp\*.*"
+		set CONT=n
+		goto screen_recorder_setup
 	)
+	echo Invalid option. Please try again. & goto contfailrendertry
 ) else (
 	goto screen_recorder_setup
 )
+
 
 :screen_recorder_setup
 if not exist "%PROGRAMFILES%\Screen Capturer Recorder" (
@@ -205,16 +221,21 @@ if not exist "%PROGRAMFILES%\Screen Capturer Recorder" (
 			echo Once you're finished installing...
 			pause
 			taskkill /f /im "Setup.Screen.Capturer.Recorder.v0.12.11.exe" >nul 2>&1
-			echo Drivers are already installed>%tmp%\srdriversinst.txt
+			echo Drivers are already installed, probably.>%tmp%\srdriversinst.txt
 			goto render_step1
 		)
 	)
 ) else (
 	echo Screen recorder drivers for FFMPEG are already installed.
+	if "%CONT%"=="y" (
+		goto render_step_ask
+	) else (
+		goto render_step1
+	)
 )
 
-goto render_step1
 :render_step_ask
+if "%CONT%"=="y" (
 echo:
 echo Before we ask which step you left off at,
 echo is your video widescreen or standard?
@@ -223,139 +244,125 @@ echo Press 1 if it's meant to be widescreen.
 echo Press 2 if it's meant to be standard.
 echo:
 :iswidereask
-set ISWIDEPROMPT=0
 set /p ISWIDEPROMPT= Is Wide?:
 if "%ISWIDEPROMPT%"=="1" (
 	set WIDTH=1920
 	set HEIGHT=1080
-) else if "%ISWIDEPROMPT%"=="2" (
+)
+if "%ISWIDEPROMPT%"=="2" (
 	set WIDTH=1680
 	set HEIGHT=1080
-) else (
+)
+if "%ISWIDEPROMPT%"=="" (
 	echo You must choose a valid option.
 	echo:
 	goto iswidereask
 )
 echo:
-
 echo Which step did you leave off at?
 echo:
-echo Press 1 if you left off at Step 2 (Avidemux)
-echo Press 2 if you left off at Step 3 (Encoding)
+echo Press 1 if you left off at Step 2 ^(FFMPEG/MediaInfo trimming^)
+echo Press 2 if you left off at Step 3 ^(Encoding^)
 echo:
 :whichstepreask
-set WHICHSTEP=""
 set /p WHICHSTEP= Option: 
 echo:
-if "%WHICHSTEP%"=="1" (
-	taskkill /f /im avidemux.exe >nul 2>&1
-	goto render_step2
-) else if "%WHICHSTEP%"=="2" (
-	goto render_step3
-) else (
+if "%WHICHSTEP%"=="1" ( goto render_step2 )
+if "%WHICHSTEP%"=="2" ( goto render_step3 )
+if "%WHICHSTEP%"=="" (
 	echo You must choose a valid option.
 	echo:
 	goto whichstepreask
 )
+)
 
 :render_step1
 echo Before we start the first step, please specify if your
-echo video is meant to be widescreen (16:9), or standard (14:9).
+echo video is meant to be widescreen ^(16:9^), or standard ^(14:9^).
 echo:
 echo Press 1 if your video is meant to be widescreen.
 echo Otherwise, press 0 if your video is meant to be standard.
 echo:
 set /p ISWIDE= Is Wide?:
 echo:
-echo Which browser do you want to use for the process?
-echo:
-echo Press 1 for Basilisk
-echo Press 2 for Chromium
-echo Press 3 for your custom set browser ^(Must be specified in settings.bat^)
-echo Press 4 for your default browser
-:BrowserSelect
-set /p BROWSERCHOICE= Browser:
-echo:
-if "%BROWSERCHOICE%"=="1" (
-	echo Opening your movie in Basilisk...
-	PING -n 2.5 127.0.0.1>nul
-	start basilisk\Basilisk-Portable\Basilisk-Portable.exe "http://localhost:%PORT%/recordWindow?movieId=%MOVIEID%&isWide=%ISWIDE%"
-) else if "%BROWSERCHOICE%"=="2" (
-	echo Opening your movie in Chromium...
-	PING -n 2.5 127.0.0.1>nul
-	start ungoogled-chromium\chromium.exe --allow-outdated-plugins --app="http://localhost:%PORT%/recordWindow?movieId=%MOVIEID%&isWide=%ISWIDE%"
-) else if "%BROWSERCHOICE%"=="3" (
-	echo Opening your movie in your custom set browser...
-	PING -n 2.5 127.0.0.1>nul
-	start %CUSTOMBROWSER% "http://localhost:%PORT%/recordWindow?movieId=%MOVIEID%&isWide=%ISWIDE%"
-) else if "%BROWSERCHOICE%"=="4" (
-	echo Opening your movie in your default browser...
-	PING -n 2.5 127.0.0.1>nul
-	start "" "http://localhost:%PORT%/recordWindow?movieId=%MOVIEID%&isWide=%ISWIDE%"
-) else (
-	echo You're supposed to pick which browser to use. Try again.
-	echo:
-	goto BrowserSelect
-)
-
-echo:
-taskkill /f /im avidemux.exe >nul 2>&1
-cls
-echo As you can see, the movie won't play right away. That's normal.
-echo:
-echo Press Enter in this box and hit play on the video player whenever
-echo you're ready. It will open the FFMPEG screen recording CLI.
-echo:
-echo When you're done recording, press any key in this window to stop
-echo recording your video. Alternatively, press Q in the FFMPEG
-echo window to also stop recording.
-echo:
-pause
+echo Chromium and ffmpeg will open in 10.5 seconds. Get ready...
+PING -n 11.5 127.0.0.1>nul
 if not exist "misc\temp" ( mkdir misc\temp )
+start ungoogled-chromium\chromium.exe --allow-outdated-plugins --start-fullscreen "http://localhost:%PORT%/recordWindow?movieId=%MOVIEID%&isWide=%ISWIDE%"
 start ffmpeg\ffmpeg.exe -rtbufsize 150M -f dshow -framerate 25 -i video="screen-capture-recorder":audio="virtual-audio-capturer" -c:v libx264 -r 25 -preset fast -tune zerolatency -crf 17 -pix_fmt yuv420p -movflags +faststart -c:a aac -ac 2 -b:a 512k -y "%TEMPPATH%"
+cls
+echo When you're done recording, press F11 on Chromium and then any key in this window to stop
+echo recording your video. Alternatively, press Q in the FFMPEG window to also stop recording.
 echo:
-echo When you're finished recording,
 pause
 taskkill /im ffmpeg.exe >nul 2>&1
 goto render_step2
 
 :render_step2
 cls
-echo Opening MP4 in Avidemux...
-start avidemux\avidemux.exe "misc\temp\rewriteable.mp4"
+echo Removing first few seconds and last few seconds using some quick maths, along with MediaInfo and ffmpeg...
+set /A rnd1=%RANDOM% * 9 / 32768 + 1
+set /A rnd2=%RANDOM% * 14 / 32768 + 1
+set /A rnd3=%RANDOM% * 3 / 32768 + 1
+set /A rnd4=%RANDOM% * 6 / 32768 + 1
+set /A rnd5=%RANDOM% * 2 / 32768 + 1
+if %rnd5%==1 ( set rnd6=0 )
+if %rnd5%==2 ( set rnd6=1 )
+for /f "delims=" %%b in ( 'mediainfo.exe "--Output=General;%%Duration/String4%%" "%TEMPPATH%"' ) do set CFDURATION=%%b
+echo DURATION: %CFDURATION%
+set HH=%CFDURATION:~0,2%
+set MM=%CFDURATION:~3,2%
+set /A S1=%CFDURATION:~6,1% - %rnd6%
+set /A S2=%CFDURATION:~7,1% + 2 - %rnd1%
+if %S2% LSS 0 ( set /A S2=%CFDURATION:~7,1% + 1 - %rnd4% )
+if %S2% GTR 9 ( set /A S2=%CFDURATION:~7,1% + 1 - %rnd4% )
+set START=00:00:0%rnd3%.%rnd2%
+set FINALDURATION=%HH%:%MM%:%S1%%S2%.%rnd2%
+echo START: %START%
+echo TRIM TO: %FINALDURATION%
 echo:
-echo Make sure to set "Video Output" to "Mpeg4 ASP (xvid4)".
+echo If the start and trim-to looks accurate, press 1 to continue.
+echo Otherwise, press 2 to regenerate.
 echo:
-echo Make sure to also set "Output format" to "AVI Muxer".
+:renders2res
+set /p RENDER2RES= Option: 
+if "%RENDER2RES%"=="1" (
+	if %VERBOSEWRAPPER%==y (
+		call ffmpeg\ffmpeg.exe -ss %START% -i "%TEMPPATH%" -codec copy -t %FINALDURATION% -y "%FFMPEGINPUT%" || set ERROR=y
+		goto renders2cont
+	) else (
+		call ffmpeg\ffmpeg.exe -ss %START% -i "%TEMPPATH%" -codec copy -t %FINALDURATION% -y "%FFMPEGINPUT%">nul || set ERROR=y
+		goto renders2cont
+	)
+)
+if "%RENDER2RES%"=="2" ( goto render_step2 )
+if "%RENDER2RES%"=="" (
+	echo You must enter a valid option.
+	echo:
+	goto renders2res
+)
 echo:
-echo Use the A and B buttons to highlight what you want gone.
-echo Use the arrow buttons to navigate through the frames.
-echo:
-echo To crop, press Ctrl+Alt+F to open the Filters menu
-echo and then use the red corner-tags and side-lines to
-echo crop it to the proper video size. The "Auto Crop"
-echo button may also be able to help.
-echo:
-echo For convenience, we'd recommend saving it to
-echo the utilities\misc\temp folder with the name
-echo "rewriteable.avi".
-echo:
-echo When finished with this step, press any key to continue
-echo to the next step.
-echo:
-pause
-goto render_step3
+
+:renders2cont
+if "%ERROR%"=="n" (
+	echo When this step is finished, you may press any key to continue to the next step.
+	echo:
+	pause
+	goto render_step3
+) else (
+	goto render_completed
+)
 
 :render_step3
 cls
 echo Press enter if the filename is 
-echo "rewriteable.avi" and it's saved to
+echo "reusable.mp4" and it's saved to
 echo the utilities\misc\temp folder.
 echo:
-echo Otherwise, drag your AVI in here
+echo Otherwise, drag your MP4 in here
 echo and then press Enter.
 echo:
-set /p FFMPEGINPUT= AVI:
+set /p FFMPEGINPUT= MP4:
 echo:
 cls
 echo Is the video widescreen ^(16:9^) or standard ^(14:9^)?
@@ -590,6 +597,7 @@ echo:
 echo ^(1^) MPEG-4 Video File ^(H.264/AAC^) ^(Default^)
 echo ^(2^) Audio/Video Interleave ^(x264/LAME^)
 echo ^(3^) WebM Video File ^(VPX9/Vorbis^)
+echo ^(4^) Windows Media Video ^(WMV2/WMAV2^)
 echo:
 :formatretry
 set /p FORMATTYPE= Option: 
@@ -613,6 +621,12 @@ if "%FORMATTYPE%"=="3" (
 	set ACODEC=libvorbis
 	goto outputcheck
 )
+if "%FORMATTYPE%"=="4" (
+	set FILESUFFIX=wmv
+	set VCODEC=msmpeg4
+	set ACODEC=wmav2
+	goto outputcheck
+)
 echo Invalid option. Please try again. && goto formatretry
 
 :outputcheck
@@ -628,12 +642,10 @@ echo:
 echo What quality ^(CRF^) do you want your video to be in?
 echo ^(0 is lossless, 17 is the default, 51 is lowest quality^)
 echo:
-echo ^(NOTE: ONLY enter a number between 0 and 51, otherwise it
-echo could screw up the entire exporting process for this session.
-echo If you wanna keep it at the default value of 17, you can just
-echo press Enter.^)
-echo:
+:crfretry
 set /p CRF= CRF: 
+if %CRF% LSS 0 ( echo CRF value too low. No negative values. Please try again. & goto crfretry )
+if %CRF% GTR 51 ( echo CRF value too high. Please try again. & goto crfretry )
 goto output
 ) else goto output
 
@@ -706,7 +718,11 @@ if "%ERROR%"=="n" (
 		call ffmpeg\ffmpeg.exe -i "file:%TEMPPATH3%" -vcodec %VCODEC% -acodec %ACODEC% %ADDITIONAL% "%OUTPUT_PATH%\%OUTPUT_FILE%">nul && echo Process completed. || echo Process failed. && set ERROR=y
 	)
 )
-goto render_completed
+if "%ERROR%"=="n" (
+	goto deletetmpfiles
+) else (
+	goto render_completed
+)
 
 :render_nooutro
 echo Starting ffmpeg...
@@ -716,7 +732,11 @@ if "%VERBOSEWRAPPER%"=="y" (
 ) else (
 	call ffmpeg\ffmpeg.exe -i "file:%FFMPEGINPUT%" -vf scale="%WIDTH%:%HEIGHT%" %VF%-r 25 -filter:a loudnorm,volume=%VOLUME% -vcodec %VCODEC% -acodec %ACODEC% %ADDITIONAL% -y "%OUTPUT_PATH%\%OUTPUT_FILE%">nul && echo Process completed. || echo Process failed. && set ERROR=y
 )
-goto render_completed
+if "%ERROR%"=="n" (
+	goto deletetmpfiles
+) else (
+	goto render_completed
+)
 
 :render
 if %OUTRO%==1 (
@@ -725,17 +745,17 @@ if %OUTRO%==1 (
 	goto render_nooutro
 )
 
-
+:deletetmpfiles
 if "%ERROR%"=="n" (
 	echo Deleting any temporary files...
-	set MISCTEMP=%CD%\misc\temp\*
-	for %%i in (%TEMPPATH%,%TEMPPATH2%,%TEMPPATH3%,%MISCTEMP%) do (
+	for %%i in (%TEMPPATH%,%TEMPPATH2%,%TEMPPATH3%) do (
 		if exist "%%i" ( del "%%i" )
 	)
+	del /s /q "%CD%\misc\temp\*.*"
 	echo:
+	goto render_completed
 )
 :render_completed
-if "%VERBOSEWRAPPER%"=="n" ( cls )
 if "%ERROR%"=="n" (
 	set WHATTODONEXT=""
 	echo The entire rendering process has been complete^^!
