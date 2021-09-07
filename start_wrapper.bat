@@ -683,9 +683,22 @@ popd
 PING -n 6 127.0.0.1>nul
 
 echo Opening Wrapper: Offline...
-		pushd utilities\ungoogled-chromium
-		if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile --app=http://localhost:!port! --allow-outdated-plugins )
-
+pushd utilities\ungoogled-chromium
+if !APPCHROMIUM!==y ( 
+	if !FULLSCREEN!==y (
+		set ARGS=--app=http://localhost:!port! --allow-outdated-plugins --start-fullscreen
+	) else (
+		set ARGS=--app=http://localhost:!port! --allow-outdated-plugins
+	)
+)
+if !APPCHROMIUM!==n ( 
+	if !FULLSCREEN!==y (
+		set ARGS=http://localhost:!port! --allow-outdated-plugins --start-fullscreen
+	) else (
+		set ARGS=http://localhost:!port! --allow-outdated-plugins
+	)
+)
+if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile !args! )
 echo Wrapper: Offline has been started^^! The video list should now be open.
 
 ::::::::::::::::
@@ -775,13 +788,13 @@ echo Time to choose. && goto wrapperidle
 :reopen_webpage	
 		echo Opening Wrapper: Offline...
 		pushd utilities\ungoogled-chromium
-		if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile --app=http://localhost:!port! --allow-outdated-plugins )
+		if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile !args! )
 goto wrapperidle
 
 :open_server
 	echo Opening the server page...
 	pushd utilities\ungoogled-chromium
-	if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile --app=https://localhost:4664 --allow-outdated-plugins )
+	if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile https://localhost:4664 --allow-outdated-plugins )
 goto wrapperidle
 
 :open_files

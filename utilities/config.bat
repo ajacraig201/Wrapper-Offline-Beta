@@ -19,3 +19,9 @@ set DRYRUN=n
 
 :: port
 set PORT=4343
+
+:: headless mode
+set APPCHROMIUM=y
+
+:: fullscreen mode
+set FULLSCREEN=n
