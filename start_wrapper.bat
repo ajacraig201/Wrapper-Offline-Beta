@@ -733,6 +733,7 @@ echo Enter 4 to open the server page
 echo Enter 5 to export a video
 echo Enter 6 to Update W:O using git
 echo Enter 7 to open the backup/restore tool
+echo Enter 8 to view software information
 echo Enter ? to open the FAQ
 echo Enter clr to clean up the screen
 echo Enter 0 to close Wrapper: Offline
@@ -766,6 +767,7 @@ if "!choice!"=="4" goto open_server
 if "!choice!"=="5" goto start_exporter
 if "!choice!"=="6" goto updategit
 if "!choice!"=="7" goto backupandrestore
+if "!choice!"=="8" goto verinfo
 if "!choice!"=="?" goto open_faq
 if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
@@ -852,6 +854,30 @@ goto wrapperidle
 call utilities\config.bat
 call utilities\metadata.bat
 goto wrapperstartedcls
+
+:verinfo
+cls
+echo Wrapper: Offline
+echo Version !WRAPPER_VER! Beta
+echo:
+echo This copy of Wrapper: Offline belongs to:
+if not %FIRST_NAME%==n (
+	if not %LAST_NAME%==n (
+		echo %FULL_NAME% ^(User: %USERNAME%^)
+	)
+) else (
+	echo User: %USERNAME%
+)
+if not %EMAIL%==n ( echo E-Mail: %EMAIL% )
+if not %DISCORD%==n ( echo Discord Tag: %DISCORD% )
+echo Machine ID: %COMPUTERNAME%
+echo:
+echo ^(DEV TIP: Interested in registering your copy of W:O under
+echo your name? Open "utilities\metadata.bat" in a text editor and
+echo edit any of the necessary values to your liking. This process
+echo will be automated in the near future.^)
+echo:
+pause & goto wrapperstartedcls
 
 :wipe_save
 call utilities\reset_install.bat
