@@ -38,7 +38,7 @@ server/vo/*
 .DS_Store
 vfproxy/*
 bbbb/*
-utilities/ungoogled-chromium/the_profile*
+utilities/ungoogled-chromium/the_profile/*
 # Personal Basilisk files
 utilities/basilisk/Basilisk-Portable/User/Basilisk/Profiles/Default/*
 utilities/basilisk/Basilisk-Portable/User/Basilisk/Profiles/Default/compatibility.ini
