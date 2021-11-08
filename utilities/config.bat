@@ -6,13 +6,13 @@ endlocal
 set VERBOSEWRAPPER=n
 
 :: skip check depends
-set SKIPCHECKDEPENDS=y
+set SKIPCHECKDEPENDS=n
 
 
 :: dry run
 set DRYRUN=n
 
-set DEVMODE=y
+set DEVMODE=n
 
 
 :: headless mode
