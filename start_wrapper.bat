@@ -44,7 +44,7 @@ if %ADMIN%==n (
 :metaavailable
 
 :: Set title
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD! [Initializing...]
+title Wrapper: Offline v!WRAPPER_VER! [Initializing...]
 
 :: Make sure we're starting in the correct folder, and that it worked (otherwise things would go horribly wrong)
 pushd "%~dp0"
@@ -118,7 +118,7 @@ if !VERBOSEWRAPPER!==n (
 	echo:
 )
 
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD! [Checking dependencies...]
+title Wrapper: Offline v!WRAPPER_VER! [Checking dependencies...]
 
 :: Preload variables
 set NEEDTHEDEPENDERS=n
@@ -257,7 +257,7 @@ if !NEEDTHEDEPENDERS!==y (
 	goto skip_dependency_install
 )
 
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD! [Installing dependencies...]
+title Wrapper: Offline v!WRAPPER_VER! [Installing dependencies...]
 
 :: Preload variables
 set INSTALL_FLAGS=ALLUSERS=1 /norestart
@@ -642,7 +642,7 @@ echo:
 :: Starting Wrapper ::
 ::::::::::::::::::::::
 
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD! [Loading...]
+title Wrapper: Offline v!WRAPPER_VER! [Loading...]
 
 :: Close existing node apps
 :: Hopefully fixes EADDRINUSE errors??
@@ -705,14 +705,14 @@ echo Wrapper: Offline has been started^^! The video list should now be open.
 :: Post-Start ::
 ::::::::::::::::
 
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD!
+title Wrapper: Offline v!WRAPPER_VER!
 if !VERBOSEWRAPPER!==y ( goto wrapperstarted )
 :wrapperstartedcls
 cls
 :wrapperstarted
 
 echo:
-echo Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD! running
+echo Wrapper: Offline v!WRAPPER_VER! running
 echo A project from VisualPlugin adapted by GoTest334 and the Wrapper: Offline team
 echo:
 if !VERBOSEWRAPPER!==n ( echo DON'T CLOSE THIS WINDOW^^! Use the quit option ^(0^) when you're done. )
@@ -823,7 +823,7 @@ echo Updating W:O...
 cls
 call update_wrapper.bat
 cls
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD!
+title Wrapper: Offline v!WRAPPER_VER!
 goto wrapperstartedcls
 
 :backupandrestore
@@ -837,7 +837,7 @@ goto wrapperidle
 echo Launching settings..
 call settings.bat
 cls
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD!
+title Wrapper: Offline v!WRAPPER_VER!
 goto wrapperstartedcls
 
 :youfuckoff
@@ -925,7 +925,7 @@ echo You must answer Yes or No. && goto exitwrapperretry
 
 :point_extraction
 
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD! [Shutting down...]
+title Wrapper: Offline v!WRAPPER_VER! [Shutting down...]
 
 :: Shut down Node.js, PHP and http-server
 
@@ -991,7 +991,7 @@ if !DRYRUN!==y ( echo Go wet your run next time. )
 pause & exit
 
 :exitwithstyle
-title Wrapper: Offline v!WRAPPER_VER!b!WRAPPER_BLD! [Shutting down... WITH STYLE]
+title Wrapper: Offline v!WRAPPER_VER! [Shutting down... WITH STYLE]
 echo SHUTTING DOWN THE WRAPPER OFFLINE
 PING -n 3 127.0.0.1>nul
 color 9b

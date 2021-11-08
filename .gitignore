@@ -38,6 +38,7 @@ server/vo/*
 .DS_Store
 vfproxy/*
 bbbb/*
+utilities/ungoogled-chromium/*
 # Personal Basilisk files
 utilities/basilisk/Basilisk-Portable/User/Basilisk/Profiles/Default/*
 utilities/basilisk/Basilisk-Portable/User/Basilisk/Profiles/Default/compatibility.ini
@@ -205,3 +206,24 @@ wrapper/pages/img/importer/Images.png
 utilities/config.bat
 wrapper/pages/php/settings.php
 wrapper/asset/delete.js
+utilities/ungoogled-chromium/the_profile/ShaderCache/GPUCache/data_3
+utilities/ungoogled-chromium/the_profile/ShaderCache/GPUCache/data_1
+utilities/ungoogled-chromium/the_profile/ShaderCache/GPUCache/data_0
+utilities/ungoogled-chromium/the_profile/Local State
+utilities/ungoogled-chromium/the_profile/Default/Web Data
+utilities/ungoogled-chromium/the_profile/Default/Visited Links
+utilities/ungoogled-chromium/the_profile/Default/Thumbnails/LOG.old
+utilities/ungoogled-chromium/the_profile/Default/Thumbnails/LOG
+utilities/ungoogled-chromium/the_profile/Default/Sync Data/LevelDB/LOG.old
+utilities/ungoogled-chromium/the_profile/Default/Sync Data/LevelDB/LOG
+utilities/ungoogled-chromium/the_profile/Default/Web Data
+utilities/ungoogled-chromium/the_profile/Default/Web Data
+utilities/ungoogled-chromium/the_profile/Default/Visited Links
+utilities/ungoogled-chromium/the_profile/Default/Network Action Predictor
+utilities/ungoogled-chromium/the_profile/Default/Login Data
+utilities/ungoogled-chromium/the_profile/Default/History-journal
+utilities/ungoogled-chromium/the_profile/Default/History
+utilities/ungoogled-chromium/the_profile/Default/Favicons
+utilities/ungoogled-chromium/the_profile/Default/Download Service/EntryDB/LOG
+utilities/ungoogled-chromium/the_profile/Default/Cookies
+utilities/config.bat

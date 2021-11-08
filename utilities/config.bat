@@ -6,22 +6,17 @@ endlocal
 set VERBOSEWRAPPER=n
 
 :: skip check depends
-set SKIPCHECKDEPENDS=n
+set SKIPCHECKDEPENDS=y
 
-:: skip depend install
-set SKIPDEPENDINSTALL=n
-
-:: dev mode
-set DEVMODE=n
 
 :: dry run
 set DRYRUN=n
 
-:: port
-set PORT=4343
+set DEVMODE=y
+
 
 :: headless mode
 set APPCHROMIUM=y
 
-:: fullscreen mode
-set FULLSCREEN=n
+set PORT=4343
+

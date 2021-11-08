@@ -119,51 +119,23 @@ if exist "wrapper\main-norpc.js" (
 ) else ( 
 	echo ^(6^) Discord rich presence is[91m OFF [0m
 )
-:: Video Lists
-if exist "wrapper\pages\html\_LISTVIEW.txt" (
-	echo ^(7^) View on the video list is set to[91m List [0m
-)
-if exist "wrapper\pages\html\_GRIDVIEW.txt" (
-	echo ^(7^) View on the video list is set to[91m Grid [0m
-)
-if exist "wrapper\pages\html\_OLDLISTVIEW.txt" (
-	echo ^(7^) View on the video list is set to[91m Classic List [0m
-)
-:: Watermark
-if exist "wrapper\static\info-*nowatermark*.json" (
-	echo ^(8^) Wrapper: Offline watermark is[92m ON [0m
-) else ( 
-	echo ^(8^) Wrapper: Offline watermark is[91m OFF [0m
-)
 :: Truncated themelist
 if exist "wrapper\_THEMES\_themelist-allthemes.xml" (
-	echo ^(9^) Truncated themelist is[92m ON [0m
+	echo ^(7^) Truncated themelist is[92m ON [0m
 ) else ( 
-	echo ^(9^) Truncated themelist is[91m OFF [0m
+	echo ^(7^) Truncated themelist is[91m OFF [0m
 )
 :: Developer mode
 if !DEVMODE!==y (
-	echo ^(10^) Developer mode is[92m ON [0m
+	echo ^(8^) Developer mode is[92m ON [0m
 ) else ( 
-	echo ^(10^) Developer mode is[91m OFF [0m
+	echo ^(8^) Developer mode is[91m OFF [0m
 )
 :: View software info
-echo ^(11^) View software information
-:: Headless mode
-if !APPCHROMIUM!==y (
-	echo ^(12^) Headless mode for Chromium is[92m ON [0m
-) else ( 
-	echo ^(12^) Headless mode for Chromium is[91m OFF [0m
-)
-:: Full Screen mode
-if !FULLSCREEN!==y (
-	echo ^(13^) Full screen mode for Chromium is[92m ON [0m
-) else ( 
-	echo ^(13^) Full screen mode for Chromium is[91m OFF [0m
-)
+echo ^(9^) View software information
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    echo ^(14^) Original LVM character IDs are[91m OFF [0m
+    echo ^(9^) Original LVM character IDs are[91m OFF [0m
 )
 
 if !DEVMODE!==y (
@@ -276,61 +248,16 @@ if "!choice!"=="?6" (
         echo when you're using it on Discord.
 	goto reaskoptionscreen
 )
-:: List/grid/oldlist view
-if "!choice!"=="7" (
-	if exist "wrapper\pages\html\_LISTVIEW.txt" goto gridview
-	if exist "wrapper\pages\html\_GRIDVIEW.txt" goto oldlistview
-	if exist "wrapper\pages\html\_OLDLISTVIEW.txt" goto listview
-)
-if "!choice!"=="?7" (
-	echo By default, grid view is disabled.
-        echo:
-	echo Most people are used to the table view, but some
-	echo people wanted a grid view, so we added it incase
-	echo people wanted it.
-        echo:
-	echo Turning this on will make Offline show the
-        echo video list in a grid view rather than a
-		echo table view.
-	goto reaskoptionscreen
-)
-:: Watermark
-if "!choice!"=="8" (
-	if !DEVMODE!==y (
-		echo ^(This message is only for those with Developer Mode on.^)
-		echo:
-		echo NOTE: If you'd like to use a custom watermark, you
-		echo will need to replace the watermark file hidden somewhere
-		echo in go_full.swf with a different one using JPEXS FFDEC.
-		echo The watermark HAS to be a .swf or it won't work.
-		echo:
-		echo Unless you modify go_full.swf to change the watermark,
-		echo by default it will use the Wrapper: Offline watermark.
-		echo:
-		echo If you prefer to not have a watermark at all and just
-		echo add your watermark in post, that's fine too.
-		echo:
-		pause
-	)
-	goto watermarktoggle
-)
-if "!choice!"=="?8" (
-    echo By default, Wrapper: Offline puts a watermark in the corner of the screen to show that it was
-    echo made using the software. If you do not want the watermark in the way and you need to use this
-    echo software for things like media production and all that, you are free to toggle the option to
-    echo disable the watermark if you'd like.
-    goto reaskoptionscreen
-)
 :: Truncated themelist
-if "!choice!"=="9" goto allthemechange
-if "!choice!"=="?9" (
+if "!choice!"=="7" goto allthemechange
+if "!choice!"=="?7" (
 	echo Cuts down the amount of themes that clog up the themelist in the videomaker.
 	echo Keeping this off is highly suggested.
 	echo However, if you want to see everything the program has to offer, turn this on.
 	goto reaskoptionscreen
 )
 :: Check depends
-if "!choice!"=="10" (
+if "!choice!"=="8" (
 	set TOTOGGLE=DEVMODE
 	if !DEVMODE!==n (
 		set TOGGLETO=y
@@ -340,7 +267,7 @@ if "!choice!"=="10" (
 	set CFGLINE=15
 	goto toggleoption
 )
-if "!choice!"=="?10" (
+if "!choice!"=="?8" (
 	echo Wrapper: Offline is free and open-source, and a lot of folks in the community like to make mods for it.
 	echo:
 	echo Turning on developer mode will provide you with some useful features for development or making your own
@@ -349,7 +276,7 @@ if "!choice!"=="?10" (
 	echo The developer settings will be visible both in these settings and in the Wrapper launcher.
 	goto reaskoptionscreen
 )
-if "!choice!"=="11" (
+if "!choice!"=="9" (
 	cls
 	echo Wrapper: Offline
 	echo Version !WRAPPER_VER! Beta
@@ -362,8 +289,6 @@ if "!choice!"=="11" (
 	) else (
 		echo User: %USERNAME%
 	)
-	if not %EMAIL%==n ( echo E-Mail: %EMAIL% )
-	if not %DISCORD%==n ( echo Discord Tag: %DISCORD% )
 	echo Machine ID: %COMPUTERNAME%
 	echo:
 	echo ^(DEV TIP: Interested in registering your copy of W:O under
@@ -374,54 +299,16 @@ if "!choice!"=="11" (
 	pause
 	goto optionscreen
 )
-if "!choice!"=="?11" (
+if "!choice!"=="?9" (
 	echo This option exists to view any software and existing license info
 	echo for this copy of Wrapper: Offline. It helps show the user if they're
 	echo running the beta build or the stable build.
 	goto reaskoptionscreen
 )
-:: Headless mode
-if "!choice!"=="12" (
-	set TOTOGGLE=APPCHROMIUM
-	if !APPCHROMIUM!==n (
-		set TOGGLETO=y
-	) else (
-		set TOGGLETO=n
-	)
-	set CFGLINE=24
-	goto toggleoption
-)
-if "!choice!"=="?12" (
-	echo Wrapper: Offline uses an included Chromium that still supports Flash. However, to hide the browser
-	echo aspects of Chromium, Wrapper: Offline usually activates a "headless mode" for Chromium so that things
-	echo like the URL box, the back/forward arrows, the home button and other icons are rendered invisible to the user.
-	echo:
-	echo Turning this off will allow all those icons to be visible to the user. This also makes things like access to
-	echo developer mode without keyboard shortcuts a breeze.
-	goto reaskoptionscreen
-)
-:: Full Screen Mode
-if "!choice!"=="13" (
-	set TOTOGGLE=FULLSCREEN
-	if !FULLSCREEN!==n (
-		set TOGGLETO=y
-	) else (
-		set TOGGLETO=n
-	)
-	set CFGLINE=27
-	goto toggleoption
-)
-if "!choice!"=="?13" (
-	echo Wrapper: Offline has a full-screen mode available which will help improve user experience.
-	echo:
-	echo Turning it on will have the included Chromium start in a full-screen mode, regardless of if
-	echo headless mode is enabled or not. By default it's disabled so as to not pester the user.
-	goto reaskoptionscreen
-)
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    if "!choice!"=="14" goto extractchars
-    if "!choice!"=="?14" (
+    if "!choice!"=="10" goto extractchars
+    if "!choice!"=="?10" (
         echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
         echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
         echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,
@@ -437,12 +324,6 @@ if !DEVMODE!==n (
 	if /i "!choice!"=="?D2" ( goto devmodeerror )
 	if /i "!choice!"=="D3" ( goto devmodeerror )
 	if /i "!choice!"=="?D3" ( goto devmodeerror )
-	if /i "!choice!"=="D4" ( goto devmodeerror )
-	if /i "!choice!"=="?D4" ( goto devmodeerror )
-	if /i "!choice!"=="D5" ( goto devmodeerror )
-	if /i "!choice!"=="?D5" ( goto devmodeerror )
-	if /i "!choice!"=="D6" ( goto devmodeerror )
-	if /i "!choice!"=="?D6" ( goto devmodeerror )
 )
 
 if !DEVMODE!==y (
@@ -576,7 +457,6 @@ echo 	"THEME_FOLDER": "./_THEMES",>> !env!
 echo 	"PREMADE_FOLDER": "./_PREMADE",>> !env!
 echo 	"EXAMPLE_FOLDER": "./_EXAMPLES",>> !env!
 echo 	"WRAPPER_VER": "!WRAPPER_VER!",>> !env!
-echo 	"WRAPPER_BLD": "!WRAPPER_BLD!",>> !env!
 echo 	"NODE_TLS_REJECT_UNAUTHORIZED": "0">> !env!
 echo }>> !env!
 set TOTOGGLE=PORT
@@ -735,42 +615,6 @@ if exist "main-norpc.js" (
 	ren main.js main-norpc.js
 	ren main-rpc.js main.js
 )
-popd
-goto optionscreen
-
-::::::::::::::::
-:: Video List ::
-::::::::::::::::
-:gridview
-echo Toggling setting...
-pushd wrapper\pages\html
-
-ren list.html table.html
-ren grid.html list.html
-ren _LISTVIEW.txt _GRIDVIEW.txt
- 
-popd
-goto optionscreen
-
-:oldlistview
-echo Toggling setting...
-pushd wrapper\pages\html
-
-ren list.html grid.html
-ren oldlist.html list.html
-ren _GRIDVIEW.txt _OLDLISTVIEW.txt
- 
-popd
-goto optionscreen
-
-:listview
-echo Toggling setting...
-pushd wrapper\pages\html
-
-ren list.html oldlist.html
-ren table.html list.html
-ren _OLDLISTVIEW.txt _LISTVIEW.txt
- 
 popd
 goto optionscreen
 
