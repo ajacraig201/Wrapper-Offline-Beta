@@ -770,7 +770,7 @@ if !DEVMODE!==y (
 	if /i "!choice!"=="folder" goto open_files
 )
 if !DEVMODE!==n (
-	if /i "!choice!"=="server" goto devmodeerror
+	if /i "!choice!"=="server" goto open_server
 	if /i "!choice!"=="amnesia" goto devmodeerror
 	if /i "!choice!"=="restart" goto devmodeerror
 	if /i "!choice!"=="reload" goto devmodeerror
@@ -782,6 +782,11 @@ echo Time to choose. && goto wrapperidle
 		echo Opening Wrapper: Offline...
 		pushd utilities\ungoogled-chromium
 		if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile !args! )
+goto wrapperidle
+
+:start_importer
+echo Opening the importer...
+start "" "utilities\import.bat"
 goto wrapperidle
 
 :open_server
