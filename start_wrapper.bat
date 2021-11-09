@@ -729,12 +729,6 @@ if !DEVMODE!==n ( echo: )
 echo Enter 1 to reopen the video list
 echo Enter 2 to open the settings
 echo Enter 3 to import a file
-echo Enter 4 to open the server page
-echo Enter 5 to export a video
-echo Enter 6 to Update W:O using git
-echo Enter 7 to open the backup/restore tool
-echo Enter 8 to view software information
-echo Enter ? to open the FAQ
 echo Enter clr to clean up the screen
 echo Enter 0 to close Wrapper: Offline
 set /a _rand=(!RANDOM!*67/32768)+1
@@ -743,6 +737,7 @@ if !DEVMODE!==y (
 	echo:
 	echo Developer options:
 	echo --------------------------------------
+	echo Type "server" to open the server page.
 	echo Type "amnesia" to wipe your save.
 	echo Type "restart" to restart Wrapper: Offline.
 	echo Type "reload" to reload your settings and metadata.
@@ -763,23 +758,19 @@ set FUCKOFF=n
 if "!choice!"=="1" goto reopen_webpage
 if "!choice!"=="2" goto settings
 if "!choice!"=="3" goto start_importer
-if "!choice!"=="4" goto open_server
-if "!choice!"=="5" goto start_exporter
-if "!choice!"=="6" goto updategit
-if "!choice!"=="7" goto backupandrestore
-if "!choice!"=="8" goto verinfo
-if "!choice!"=="?" goto open_faq
 if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
 if /i "!choice!"=="clear" goto wrapperstartedcls
 :: dev options
 if !DEVMODE!==y (
+	if /i "!choice!"=="server" goto open_server
 	if /i "!choice!"=="amnesia" goto wipe_save
 	if /i "!choice!"=="restart" goto restart
 	if /i "!choice!"=="reload" goto reload_settings
 	if /i "!choice!"=="folder" goto open_files
 )
 if !DEVMODE!==n (
+	if /i "!choice!"=="server" goto devmodeerror
 	if /i "!choice!"=="amnesia" goto devmodeerror
 	if /i "!choice!"=="restart" goto devmodeerror
 	if /i "!choice!"=="reload" goto devmodeerror
@@ -806,33 +797,6 @@ start explorer.exe "%CD%"
 popd
 goto wrapperidle
 
-:start_importer
-echo Opening the importer...
-start "" "utilities\import.bat"
-goto wrapperidle
-
-:start_exporter
-echo Opening the exporter ^(in another window^)...
-pushd utilities
-start export.bat
-popd
-goto wrapperidle
-
-:updategit
-echo Updating W:O...
-cls
-call update_wrapper.bat
-cls
-title Wrapper: Offline v!WRAPPER_VER!
-goto wrapperstartedcls
-
-:backupandrestore
-echo Starting the backup and restore tool...
-pushd utilities
-start backup_and_restore.bat
-popd
-goto wrapperidle
-
 :settings
 echo Launching settings..
 call settings.bat
@@ -845,39 +809,10 @@ echo You fuck off.
 set FUCKOFF=y
 goto wrapperidle
 
-:open_faq
-echo Opening the FAQ...
-start notepad.exe FAQ.md
-goto wrapperidle
-
 :reload_settings
 call utilities\config.bat
 call utilities\metadata.bat
 goto wrapperstartedcls
-
-:verinfo
-cls
-echo Wrapper: Offline
-echo Version !WRAPPER_VER! Beta
-echo:
-echo This copy of Wrapper: Offline belongs to:
-if not %FIRST_NAME%==n (
-	if not %LAST_NAME%==n (
-		echo %FULL_NAME% ^(User: %USERNAME%^)
-	)
-) else (
-	echo User: %USERNAME%
-)
-if not %EMAIL%==n ( echo E-Mail: %EMAIL% )
-if not %DISCORD%==n ( echo Discord Tag: %DISCORD% )
-echo Machine ID: %COMPUTERNAME%
-echo:
-echo ^(DEV TIP: Interested in registering your copy of W:O under
-echo your name? Open "utilities\metadata.bat" in a text editor and
-echo edit any of the necessary values to your liking. This process
-echo will be automated in the near future.^)
-echo:
-pause & goto wrapperstartedcls
 
 :wipe_save
 call utilities\reset_install.bat
