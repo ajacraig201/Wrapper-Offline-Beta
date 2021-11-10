@@ -12,9 +12,6 @@
 :: Lets variables work or something idk im not a nerd
 SETLOCAL ENABLEDELAYEDEXPANSION
 
-:: Idk what this is
-if exist %tmp%\importserver.bat ( del %tmp%\importserver.bat )
-
 :: Load metadata
 if not exist utilities\metadata.bat ( set NOMETA=y & goto metamissing )
 set SUBSCRIPT=y
@@ -241,7 +238,7 @@ if !NEEDTHEDEPENDERS!==y (
 		set "line=%%b"
 		>>!tmpcfg! echo(!line:~1!
 		set /a count+=1
-		if !count! GEQ 9 goto linereached
+		if !count! GEQ 7 goto linereached
 	)
 	:linereached
 	:: Overwrite the original setting
@@ -684,21 +681,8 @@ PING -n 6 127.0.0.1>nul
 
 echo Opening Wrapper: Offline...
 pushd utilities\ungoogled-chromium
-if !APPCHROMIUM!==y ( 
-	if !FULLSCREEN!==y (
-		set ARGS=--app=http://localhost:!port! --allow-outdated-plugins --start-fullscreen
-	) else (
-		set ARGS=--app=http://localhost:!port! --allow-outdated-plugins
-	)
-)
-if !APPCHROMIUM!==n ( 
-	if !FULLSCREEN!==y (
-		set ARGS=http://localhost:!port! --allow-outdated-plugins --start-fullscreen
-	) else (
-		set ARGS=http://localhost:!port! --allow-outdated-plugins
-	)
-)
-if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile !args! )
+set ARGS=--app=http://localhost:!port! --allow-outdated-plugins
+if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile !ARGS! )
 echo Wrapper: Offline has been started^^! The video list should now be open.
 
 ::::::::::::::::
@@ -781,7 +765,7 @@ echo Time to choose. && goto wrapperidle
 :reopen_webpage	
 		echo Opening Wrapper: Offline...
 		pushd utilities\ungoogled-chromium
-		if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile !args! )
+		if !DRYRUN!==n ( start chromium.exe --user-data-dir=the_profile !ARGS! )
 goto wrapperidle
 
 :start_importer
