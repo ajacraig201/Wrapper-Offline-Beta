@@ -147,20 +147,15 @@ if !DEVMODE!==y (
 :: Dev options
 :: These are really specific options that no casual user would ever really need
 if !DEVMODE!==y (
-	if !SKIPDEPENDINSTALL!==n (
-		echo ^(D1^) Installing dependencies is[92m ON [0m
-	) else ( 
-		echo ^(D1^) Installing dependencies is[91m OFF [0m
-	)
 	if !DRYRUN!==y (
-		echo ^(D2^) Dry run mode is[92m ON [0m
+		echo ^(D1^) Dry run mode is[92m ON [0m
 	) else ( 
-		echo ^(D2^) Dry run mode is[91m OFF [0m
+		echo ^(D1^) Dry run mode is[91m OFF [0m
 	)
 	if !PORT!==4343 (
-		echo ^(D3^) Localhost port for Wrapper: Offline frontend is[92m 4343 [0m
+		echo ^(D2^) Localhost port for Wrapper: Offline frontend is[92m 4343 [0m
 	) else ( 
-		echo ^(D3^) Localhost port for Wrapper: Offline frontend is[91m !PORT! [0m
+		echo ^(D2^) Localhost port for Wrapper: Offline frontend is[91m !PORT! [0m
 	)
 )
 :reaskoptionscreen
@@ -175,7 +170,7 @@ if "!choice!"=="1" (
 	) else (
 		set TOGGLETO=n
 	)
-	set CFGLINE=6
+	set CFGLINE=5
 	goto toggleoption
 )
 if "!choice!"=="?1" (
@@ -192,7 +187,7 @@ if "!choice!"=="2" (
 	) else (
 		set TOGGLETO=n
 	)
-	set CFGLINE=9
+	set CFGLINE=7
 	goto toggleoption
 )
 if "!choice!"=="?2" (
@@ -264,7 +259,7 @@ if "!choice!"=="8" (
 	) else (
 		set TOGGLETO=n
 	)
-	set CFGLINE=15
+	set CFGLINE=11
 	goto toggleoption
 )
 if "!choice!"=="?8" (
@@ -322,43 +317,26 @@ if !DEVMODE!==n (
 	if /i "!choice!"=="?D1" ( goto devmodeerror )
 	if /i "!choice!"=="D2" ( goto devmodeerror )
 	if /i "!choice!"=="?D2" ( goto devmodeerror )
-	if /i "!choice!"=="D3" ( goto devmodeerror )
-	if /i "!choice!"=="?D3" ( goto devmodeerror )
 )
 
 if !DEVMODE!==y (
 	if /i "!choice!"=="D1" (
-		set TOTOGGLE=SKIPDEPENDINSTALL
-		if !SKIPDEPENDINSTALL!==n (
-			set TOGGLETO=y
-		) else (
-			set TOGGLETO=n
-		)
-		set CFGLINE=12
-		goto toggleoption
-	)
-	if /i "!choice!"=="?D1" (
-		echo Disabling this will still check for dependencies, but won't install them.
-		echo I'm not sure why I added this, but I don't have a reason to take it out.
-		goto reaskoptionscreen
-	)
-	if /i "!choice!"=="D2" (
 		set TOTOGGLE=DRYRUN
 		if !DRYRUN!==n (
 			set TOGGLETO=y
 		) else (
 			set TOGGLETO=n
 		)
-		set CFGLINE=18
+		set CFGLINE=9
 		goto toggleoption
 	)
-	if /i "!choice!"=="?D2" (
+	if /i "!choice!"=="?D1" (
 		echo Turning this on will run through all of the launcher's code without affecting anything.
 		echo Useful for debugging the launcher without uninstalling things and all that.
 		goto reaskoptionscreen
 	)
-	if /i "!choice!"=="D3" goto changeportnumber
-	if /i "!choice!"=="?D3" (
+	if /i "!choice!"=="D2" goto changeportnumber
+	if /i "!choice!"=="?D2" (
 		echo By default, the port number of the frontend is 4343.
 		echo:
 		echo However, some people seem to be having issues with Wrapper: Offline and
@@ -461,7 +439,7 @@ echo 	"NODE_TLS_REJECT_UNAUTHORIZED": "0">> !env!
 echo }>> !env!
 set TOTOGGLE=PORT
 set TOGGLETO=!PORTNUMBER!
-set CFGLINE=21
+set CFGLINE=13
 goto toggleoption
 	
 
