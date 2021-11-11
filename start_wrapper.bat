@@ -245,7 +245,7 @@ if !NEEDTHEDEPENDERS!==y (
 	echo set SKIPCHECKDEPENDS=y>> !tmpcfg!
 	echo:>> !tmpcfg!
 	:: Print the last of the config to our temp file
-	more +15 !cfg!>> !tmpcfg!
+	more +8 !cfg!>> !tmpcfg!
 	:: Make our temp file the normal file
 	copy /y !tmpcfg! !cfg! >nul
 	del !tmpcfg!
