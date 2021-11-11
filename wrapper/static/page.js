@@ -204,9 +204,9 @@ module.exports = function (req, res, url) {
 				}
 			}
 		</script>
+		<link rel="stylesheet" type="text/css" href="/pages/css/swf.css">
 		<link rel="stylesheet" type="text/css" href="/pages/css/modern-normalize.css">
 		<link rel="stylesheet" type="text/css" href="/pages/css/global.css">
-		<link rel="stylesheet" type="text/css" href="/pages/css/swf.css">
 	</head>
 	
 	<header id="header">
@@ -229,14 +229,6 @@ module.exports = function (req, res, url) {
 		<main>
 			${toObjectString(attrs, params)}
 		</main>
-
-		<form enctype='multipart/form-data' action='/upload_movie' method='post'>
-			<input id='file' type="file" onchange="this.form.submit()" name='import' />
-		</form>
-
-		<form enctype='multipart/form-data' action='/upload_character' method='post'>
-			<input id='file2' type="file" onchange="this.form.submit()" name='import' />
-		</form>
-	</body>${stuff.pages[url.pathname] || ''}`)
+	${stuff.pages[url.pathname] || ''}</body>`)
 	return true;
 };
