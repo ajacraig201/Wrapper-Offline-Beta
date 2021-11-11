@@ -190,15 +190,17 @@ module.exports = function (req, res, url) {
 	}
 	res.setHeader("Content-Type", "text/html; charset=UTF-8");
 	Object.assign(params.flashvars, query);
+	// if you're seeing this, just know i hate doing this stuff - spark
 	res.end(`
 	<head>
 		<script>
 			document.title='${title}',flashvars=${JSON.stringify(params.flashvars)}
 		</script>
+		<script src="/pages/js/jquery.js"></script>
 		<script>
 			if(window.location.pathname == '/player' || window.location.pathname == '/go_full' || window.location.pathname == '/recordWindow' || window.location.pathname == '/go_full/tutorial') {
 				function hideHeader() {
-					document.getElementById("header").remove();
+					$("#header").remove();
 				}
 			}
 		</script>
