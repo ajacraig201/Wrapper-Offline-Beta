@@ -196,7 +196,7 @@ module.exports = function (req, res, url) {
 		<script>
 			document.title='${title}',flashvars=${JSON.stringify(params.flashvars)}
 		</script>
-		<script src="/pages/js/jquery.js"></script>
+		<script src="/pages/js/stuff.js"></script>
 		<script>
 			if(window.location.pathname == '/player' || window.location.pathname == '/go_full' || window.location.pathname == '/recordWindow' || window.location.pathname == '/go_full/tutorial') {
 				function hideHeader() {
