@@ -54,7 +54,9 @@ module.exports = (voiceName, text) => {
 				break;
 			}
 			/* WARNING: NUANCE TTS API HAS BACKGROUND MUSIC */
-			case "nuance": {
+			/* so then WHY do we have it??????? i'm removing this. */
+			
+			/* case "nuance": {
 				var q = qs.encode({
 					voice_name: voice.arg,
 					speak_text: text,
@@ -72,7 +74,7 @@ module.exports = (voiceName, text) => {
 					}
 				);
 				break;
-			}
+			} */
 			case "cepstral": {
 				https.get("https://www.cepstral.com/en/demos", (r) => {
 					const cookie = r.headers["set-cookie"];
