@@ -216,14 +216,9 @@ if !DRYRUN!==y (
 ::::::::::::::::::::::::
 
 if !NEEDTHEDEPENDERS!==y (
-	if !SKIPDEPENDINSTALL!==n (
-		echo:
-		echo Installing missing dependencies...
-		echo:
-	) else (
-	echo Skipping dependency install.
-	goto skip_dependency_install
-	)
+	echo:
+	echo Installing missing dependencies...
+	echo:
 ) else (
 	echo All dependencies are available.
 	echo Turning off checking dependencies...
