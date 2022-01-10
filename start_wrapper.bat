@@ -11,11 +11,15 @@
 
 :: check for updates
 
-echo Checking for updates...
-call utilities\PortableGit\bin\git.exe fetch --all
-call utilities\PortableGit\bin\git.exe branch backup-master
-echo Updating...
-call utilities\PortableGit\bin\git.exe reset --hard origin/main
+if exist utilities\PortableGit\bin\git.exe (
+	echo Checking for updates...
+	call utilities\PortableGit\bin\git.exe fetch --all
+	call utilities\PortableGit\bin\git.exe branch backup-master
+	echo Updating...
+	call utilities\PortableGit\bin\git.exe reset --hard origin/main
+) else (
+	echo Git not found. Skipping update.
+)
 
 :: Lets variables work or something idk im not a nerd
 SETLOCAL ENABLEDELAYEDEXPANSION
