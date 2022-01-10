@@ -9,6 +9,14 @@
 :: Stop commands from spamming stuff, cleans up the screen
 @echo off && cls
 
+:: check for updates
+
+echo Checking for updates...
+call utilities\PortableGit\bin\git.exe fetch --all
+call utilities\PortableGit\bin\git.exe branch backup-master
+echo Updating...
+call utilities\PortableGit\bin\git.exe reset --hard origin/main
+
 :: Lets variables work or something idk im not a nerd
 SETLOCAL ENABLEDELAYEDEXPANSION
 
