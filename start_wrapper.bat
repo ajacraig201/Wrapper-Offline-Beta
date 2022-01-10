@@ -11,6 +11,7 @@
 
 :: check for updates
 
+pushd "%~dp0"
 if .git (
 	echo Checking for updates...
 	call utilities\PortableGit\bin\git.exe fetch --all
