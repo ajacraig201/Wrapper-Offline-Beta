@@ -11,7 +11,7 @@
 
 :: check for updates
 
-if exist utilities\PortableGit\bin\git.exe (
+if .git (
 	echo Checking for updates...
 	call utilities\PortableGit\bin\git.exe fetch --all
 	call utilities\PortableGit\bin\git.exe branch backup-master
