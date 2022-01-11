@@ -106,36 +106,42 @@ if exist "wrapper\static\page-nodebug.js" (
 ) else ( 
 	echo ^(4^) Debug videomaker is[91m OFF [0m
 )
+:: Skip updating
+if !AUTOUPDATE!==y (
+	echo ^(5^) Auto updating is[92m ON [0m
+) else ( 
+	echo ^(5^) Auto updating is[91m OFF [0m
+)
 :: Dark mode
 if exist "wrapper\pages\css\global-light.css" (
-	echo ^(5^) Dark mode is[92m ON [0m
+	echo ^(6^) Dark mode is[92m ON [0m
 )
 if exist "wrapper\pages\css\global-dark.css" ( 
-	echo ^(5^) Dark mode is[91m OFF [0m
+	echo ^(6^) Dark mode is[91m OFF [0m
 )
 :: Rich presence
 if exist "wrapper\main-norpc.js" (
-	echo ^(6^) Discord rich presence is[92m ON [0m
+	echo ^(7^) Discord rich presence is[92m ON [0m
 ) else ( 
-	echo ^(6^) Discord rich presence is[91m OFF [0m
+	echo ^(7^) Discord rich presence is[91m OFF [0m
 )
 :: Truncated themelist
 if exist "wrapper\_THEMES\_themelist-allthemes.xml" (
-	echo ^(7^) Truncated themelist is[92m ON [0m
+	echo ^(8^) Truncated themelist is[92m ON [0m
 ) else ( 
-	echo ^(7^) Truncated themelist is[91m OFF [0m
+	echo ^(8^) Truncated themelist is[91m OFF [0m
 )
 :: Developer mode
 if !DEVMODE!==y (
-	echo ^(8^) Developer mode is[92m ON [0m
+	echo ^(9^) Developer mode is[92m ON [0m
 ) else ( 
-	echo ^(8^) Developer mode is[91m OFF [0m
+	echo ^(9^) Developer mode is[91m OFF [0m
 )
 :: View software info
-echo ^(9^) View software information
+echo ^(10^) View software information
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    echo ^(9^) Original LVM character IDs are[91m OFF [0m
+    echo ^(11^) Original LVM character IDs are[91m OFF [0m
 )
 
 if !DEVMODE!==y (
@@ -218,9 +224,28 @@ if "!choice!"=="?4" (
         echo will also make character search work again.
 	goto reaskoptionscreen
 )
-:: Dark Mode
-if "!choice!"=="5" goto darkmodechange
+:: Auto Update
+if "!choice!"=="5" (
+	set TOTOGGLE=AUTOUPDATE
+	if !AUTOUPDATE!==y (
+		set TOGGLETO=n
+	) else (
+		set TOGGLETO=y
+	)
+	set CFGLINE=15
+	goto toggleoption
+)
 if "!choice!"=="?5" (
+	echo By default, when you open start_wrapper.bat it 
+	echo will auto-update to the newest commit on Github.
+	echo This may be annoying to developers making modifications to the program, 
+	echo as when this is done it resets uncommitted work.
+	echo Turning this off will stop Wrapper from auto-updating.
+	goto reaskoptionscreen
+)
+:: Dark Mode
+if "!choice!"=="6" goto darkmodechange
+if "!choice!"=="?6" (
 	echo By default, dark mode is enabled on the video and theme lists.
         echo:
 	echo Dark mode is used to help reduce eyestrain when viewing those lists, and
@@ -230,8 +255,8 @@ if "!choice!"=="?5" (
 	goto reaskoptionscreen
 )
 :: Rich presence
-if "!choice!"=="6" goto rpcchange
-if "!choice!"=="?6" (
+if "!choice!"=="7" goto rpcchange
+if "!choice!"=="?7" (
 	echo By default, Discord rich presence is enabled.
         echo:
 	echo It's used to show when you're using Wrapper: Offline
@@ -244,15 +269,15 @@ if "!choice!"=="?6" (
 	goto reaskoptionscreen
 )
 :: Truncated themelist
-if "!choice!"=="7" goto allthemechange
-if "!choice!"=="?7" (
+if "!choice!"=="8" goto allthemechange
+if "!choice!"=="?8" (
 	echo Cuts down the amount of themes that clog up the themelist in the videomaker.
 	echo Keeping this off is highly suggested.
 	echo However, if you want to see everything the program has to offer, turn this on.
 	goto reaskoptionscreen
 )
 :: Check depends
-if "!choice!"=="8" (
+if "!choice!"=="9" (
 	set TOTOGGLE=DEVMODE
 	if !DEVMODE!==n (
 		set TOGGLETO=y
@@ -262,7 +287,7 @@ if "!choice!"=="8" (
 	set CFGLINE=11
 	goto toggleoption
 )
-if "!choice!"=="?8" (
+if "!choice!"=="?9" (
 	echo Wrapper: Offline is free and open-source, and a lot of folks in the community like to make mods for it.
 	echo:
 	echo Turning on developer mode will provide you with some useful features for development or making your own
@@ -271,7 +296,7 @@ if "!choice!"=="?8" (
 	echo The developer settings will be visible both in these settings and in the Wrapper launcher.
 	goto reaskoptionscreen
 )
-if "!choice!"=="9" (
+if "!choice!"=="10" (
 	cls
 	echo Wrapper: Offline
 	echo Version !WRAPPER_VER! Beta
@@ -294,7 +319,7 @@ if "!choice!"=="9" (
 	pause
 	goto optionscreen
 )
-if "!choice!"=="?9" (
+if "!choice!"=="?10" (
 	echo This option exists to view any software and existing license info
 	echo for this copy of Wrapper: Offline. It helps show the user if they're
 	echo running the beta build or the stable build.
@@ -302,8 +327,8 @@ if "!choice!"=="?9" (
 )
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    if "!choice!"=="10" goto extractchars
-    if "!choice!"=="?10" (
+    if "!choice!"=="11" goto extractchars
+    if "!choice!"=="?11" (
         echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
         echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
         echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,

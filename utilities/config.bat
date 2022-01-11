@@ -4,11 +4,13 @@ endlocal
 
 set VERBOSEWRAPPER=n
 
-set SKIPCHECKDEPENDS=n
+set SKIPCHECKDEPENDS=y
 
 set DRYRUN=n
 
 set DEVMODE=n
 
 set PORT=4343
+
+set AUTOUPDATE=y
 
