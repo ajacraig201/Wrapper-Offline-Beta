@@ -119,29 +119,23 @@ if exist "wrapper\pages\css\global-light.css" (
 if exist "wrapper\pages\css\global-dark.css" ( 
 	echo ^(6^) Dark mode is[91m OFF [0m
 )
-:: Rich presence
-if exist "wrapper\main-norpc.js" (
-	echo ^(7^) Discord rich presence is[92m ON [0m
-) else ( 
-	echo ^(7^) Discord rich presence is[91m OFF [0m
-)
 :: Truncated themelist
 if exist "wrapper\_THEMES\_themelist-allthemes.xml" (
-	echo ^(8^) Truncated themelist is[92m ON [0m
+	echo ^(7^) Truncated themelist is[92m ON [0m
 ) else ( 
-	echo ^(8^) Truncated themelist is[91m OFF [0m
+	echo ^(7^) Truncated themelist is[91m OFF [0m
 )
 :: Developer mode
 if !DEVMODE!==y (
-	echo ^(9^) Developer mode is[92m ON [0m
+	echo ^(8^) Developer mode is[92m ON [0m
 ) else ( 
-	echo ^(9^) Developer mode is[91m OFF [0m
+	echo ^(8^) Developer mode is[91m OFF [0m
 )
 :: View software info
-echo ^(10^) View software information
+echo ^(9^) View software information
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    echo ^(11^) Original LVM character IDs are[91m OFF [0m
+    echo ^(10^) Original LVM character IDs are[91m OFF [0m
 )
 
 if !DEVMODE!==y (
@@ -254,30 +248,16 @@ if "!choice!"=="?6" (
 	echo Turning this off will revert Offline back to the original light theme.
 	goto reaskoptionscreen
 )
-:: Rich presence
-if "!choice!"=="7" goto rpcchange
-if "!choice!"=="?7" (
-	echo By default, Discord rich presence is enabled.
-        echo:
-	echo It's used to show when you're using Wrapper: Offline
-        echo in your "Playing A Game" status on Discord, much like
-        echo how lots of modern computer games will show on your
-        echo Discord status when you're playing them.
-        echo:
-	echo Turning this off will make Offline stop saying
-        echo when you're using it on Discord.
-	goto reaskoptionscreen
-)
 :: Truncated themelist
-if "!choice!"=="8" goto allthemechange
-if "!choice!"=="?8" (
+if "!choice!"=="7" goto allthemechange
+if "!choice!"=="?7" (
 	echo Cuts down the amount of themes that clog up the themelist in the videomaker.
 	echo Keeping this off is highly suggested.
 	echo However, if you want to see everything the program has to offer, turn this on.
 	goto reaskoptionscreen
 )
 :: Check depends
-if "!choice!"=="9" (
+if "!choice!"=="8" (
 	set TOTOGGLE=DEVMODE
 	if !DEVMODE!==n (
 		set TOGGLETO=y
@@ -287,7 +267,7 @@ if "!choice!"=="9" (
 	set CFGLINE=11
 	goto toggleoption
 )
-if "!choice!"=="?9" (
+if "!choice!"=="?8" (
 	echo Wrapper: Offline is free and open-source, and a lot of folks in the community like to make mods for it.
 	echo:
 	echo Turning on developer mode will provide you with some useful features for development or making your own
@@ -296,7 +276,7 @@ if "!choice!"=="?9" (
 	echo The developer settings will be visible both in these settings and in the Wrapper launcher.
 	goto reaskoptionscreen
 )
-if "!choice!"=="10" (
+if "!choice!"=="9" (
 	cls
 	echo Wrapper: Offline
 	echo Version !WRAPPER_VER! Beta
@@ -319,7 +299,7 @@ if "!choice!"=="10" (
 	pause
 	goto optionscreen
 )
-if "!choice!"=="?10" (
+if "!choice!"=="?9" (
 	echo This option exists to view any software and existing license info
 	echo for this copy of Wrapper: Offline. It helps show the user if they're
 	echo running the beta build or the stable build.
@@ -327,8 +307,8 @@ if "!choice!"=="?10" (
 )
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    if "!choice!"=="11" goto extractchars
-    if "!choice!"=="?11" (
+    if "!choice!"=="10" goto extractchars
+    if "!choice!"=="?10" (
         echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
         echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
         echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,
