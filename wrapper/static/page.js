@@ -35,6 +35,7 @@ module.exports = function (req, res, url) {
 	switch (url.pathname) {
 		case "/cc": {
 			title = 'Character Creator';
+			rpcValue = "cc";
 			attrs = {
 				data: process.env.SWF_URL + '/cc.swf', // data: 'cc.swf',
 				type: 'application/x-shockwave-flash', 
@@ -67,6 +68,7 @@ module.exports = function (req, res, url) {
 
 		case "/cc_browser": {
 			title = "Character Browser";
+			rpcValue = "ccb";
 			attrs = {
 				data: process.env.SWF_URL + "/cc_browser.swf", // data: 'cc_browser.swf',
 				type: "application/x-shockwave-flash",
@@ -105,6 +107,7 @@ module.exports = function (req, res, url) {
 					? query.movieId
 					: `m-${fUtil[query.noAutosave ? "getNextFileId" : "fillNextFileId"]("movie-", ".xml")}`;
 			title = "Video Editor";
+			rpcValue = "vm";
 			attrs = {
 				data: process.env.SWF_URL + "/go_full.swf",
 				type: "application/x-shockwave-flash",
@@ -142,6 +145,7 @@ module.exports = function (req, res, url) {
 
 		case "/player": {
 			title = "Video Player";
+			rpcValue = "vp";
 			attrs = {
 				data: process.env.SWF_URL + "/player.swf",
 				type: "application/x-shockwave-flash",
@@ -164,6 +168,7 @@ module.exports = function (req, res, url) {
 
 		case "/recordWindow": {
 			title = "Record Window";
+			rpcValue = "vp";
 			attrs = {
 				data: process.env.SWF_URL + "/player.swf",
 				type: "application/x-shockwave-flash",
@@ -203,6 +208,9 @@ module.exports = function (req, res, url) {
 					$("#header").remove();
 				}
 			}
+			const rpcRequest = new XMLHttpRequest();
+			rpcRequest.open('GET', '/setRPC/?page=${rpcValue}');
+			rpcRequest.send();
 		</script>
 		<link rel="stylesheet" type="text/css" href="/pages/css/modern-normalize.css">
 		<link rel="stylesheet" type="text/css" href="/pages/css/global.css">
