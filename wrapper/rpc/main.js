@@ -48,7 +48,7 @@ try {
  module.exports = function (req, res, url) {
 	if (!url.path.startsWith("/setRPC/")) return;
 	switch (url.query.page) {
-		case "list": { var state = 'Video List'; break; }
+		case "vl": { var state = 'Video List'; break; }
 		case "vm": { var state = 'Making a Video'; break; }
 		case "cc": { var state = 'Creating a Character'; break; }
 		case "ccb": { var state = 'Browsing Characters'; break; }
