@@ -168,6 +168,18 @@
 			},
 			"content": "{\"status\":\"ok\",\"data\":[]}"
 		},
+		"/api_v2/team/members": {
+			"headers": {
+				"Content-Type": "application/json"
+			},
+			"content": "{\"status\":\"forbidden\",\"message\":\"Not a Professional team user\"}"
+		},
+		"/api_v2/studio_preference/get": {
+			"headers": {
+				"Content-Type": "application/json"
+			},
+			"content": "{\"status\":\"ok\",\"data\":[{\"category\":{\"favorite\":{\"template\":{\"business\":[\"office\"]}},\"featured\":{\"template\":{\"business\":[]}}}}]}"
+		},
 		"/pages/html/list.html": {
 			"headers": {
 				"Location": "/pages/html/list.html"
