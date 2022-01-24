@@ -579,11 +579,15 @@ module.exports = {
 						const m = useBase64(aId) ? 'base64' : 'utf8', b = Buffer.from(element.val, m);
 						const d = await new Promise(res => mp3Duration(b, (e, d) => e || res(Math.floor(1e3 * d))));
 						const t = assetTypes[aId];
-						//const n = `ugc.${t}.${aId}`;
-						//fUtil.addToZip(zip, n, b);
-						ugcString += `<sound subtype="${t.subtype}" id="${aId}" enc_asset_id="${aId
-							}" name="${t.name}" downloadtype="progressive" duration="${d}"/>`;
-						caché.save(mId, aId, b);
+						if (t === undefined) {
+							console.log('Error loading asset');
+						} else {
+							const n = `ugc.${t}.${aId}`;
+							fUtil.addToZip(zip, n, b);
+							ugcString += `<sound subtype="${t.subtype}" id="${aId}" enc_asset_id="${aId
+								}" name="${t.name}" downloadtype="progressive" duration="${d}"/>`;
+							caché.save(mId, aId, b);
+						}
 					}
 					break;
 				}
