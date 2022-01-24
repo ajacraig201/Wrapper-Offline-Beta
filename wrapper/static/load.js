@@ -5,6 +5,7 @@ let version = env.WRAPPER_VER;
 let build = env.WRAPPER_BLD;
 
 const stuff = require("./info");
+const rpc = require("../misc/rpc.js");
 const http = require("http");
 const fs = require("fs");
 const { rejects } = require("assert");
@@ -24,6 +25,16 @@ module.exports = function (req, res, url) {
 			var link = t.regexLink ? url.path.replace(regex, t.regexLink) : t.link || url.path;
 			var headers = t.headers;
 			var path = `./${link}`;
+			
+			if (link.startsWith("/pages/html/list.html")) {
+				var rpcValue = 'vl';
+			} else {
+				var rpcValue = 'none'
+			}
+
+			if (rpcValue !== 'none') {
+				rpc.setActivity(rpcValue);
+			}
 
 			try {
 				for (var headerName in headers || {}) {
