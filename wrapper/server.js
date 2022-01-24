@@ -23,7 +23,7 @@ const thL = require("./theme/list");
 const thl = require("./theme/load");
 const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
-const rpc = require("./rpc/main");
+const rpc = require("./misc/rpc");
 const url = require("url");
 
 const functions = [mvL, pmc, asl, chl, thl, thL, chs, chu, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl, rpc];
