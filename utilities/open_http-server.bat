@@ -5,7 +5,7 @@
 pushd "%~dp0"
 title HTTP-SERVER HASN'T STARTED
 pushd ..\server
-call http-server -p 4664 -c-1 -S -C the.crt -K the.key --trace-deprecation
+call http-server -p 4664 -c-1 -S -C the.crt -K the.key --trace-deprecation -a ::1
 echo:
 echo If you see an error saying "http-server is not recognized",
 echo please type "npm install http-server -g" in this window,
