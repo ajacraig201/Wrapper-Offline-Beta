@@ -1,5 +1,6 @@
 const fUtil = require("../misc/file");
 const stuff = require("./info");
+const rpc = require("../misc/rpc");
 const http = require("http");
 
 function toAttrString(table) {
@@ -195,6 +196,7 @@ module.exports = function (req, res, url) {
 	}
 	res.setHeader("Content-Type", "text/html; charset=UTF-8");
 	Object.assign(params.flashvars, query);
+	rpc.setActivity(rpcValue);
 	// if you're seeing this, just know i hate doing this stuff - spark
 	res.end(`
 	<head>
@@ -208,9 +210,6 @@ module.exports = function (req, res, url) {
 					$("#header").remove();
 				}
 			}
-			const rpcRequest = new XMLHttpRequest();
-			rpcRequest.open('GET', '/setRPC/?page=${rpcValue}');
-			rpcRequest.send();
 		</script>
 		<link rel="stylesheet" type="text/css" href="/pages/css/modern-normalize.css">
 		<link rel="stylesheet" type="text/css" href="/pages/css/global.css">
