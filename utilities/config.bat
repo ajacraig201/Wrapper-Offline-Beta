@@ -4,7 +4,7 @@ endlocal
 
 set VERBOSEWRAPPER=n
 
-set SKIPCHECKDEPENDS=y
+set SKIPCHECKDEPENDS=n
 
 set DRYRUN=n
 
