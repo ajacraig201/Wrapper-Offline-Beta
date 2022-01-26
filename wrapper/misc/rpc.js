@@ -7,45 +7,51 @@ const env = Object.assign(process.env,
 // env.json variables
 let version = env.WRAPPER_VER;
 
-
 // Discord rich presence
-const rpc = new RPC.Client({
-	transport: "ipc"
-});
+if (env.RPC !== "n") {
+	const rpc = new RPC.Client({
+		transport: "ipc"
+	});
+}
+
 module.exports = {
 	setActivity(page) {
-		switch (page) {
-			case "vl": { 
-				var state = 'Video List'; 
-				break; 
+		if (env.RPC !== "n") {
+			switch (page) {
+				case "vl": { 
+					var state = 'Video List'; 
+					break; 
+				}
+				case "vm": { 
+					var state = 'Making a Video'; 
+					break; 
+				}
+				case "cc": { 
+					var state = 'Creating a Character'; 
+					break; 
+				}
+				case "ccb": { 
+					var state = 'Browsing Characters'; 
+					break; 
+				}
+				case "vp": { 
+					var state = 'Watching a Video'; 
+					break; 
+				}
 			}
-			case "vm": { 
-				var state = 'Making a Video'; 
-				break; 
-			}
-			case "cc": { 
-				var state = 'Creating a Character'; 
-				break; 
-			}
-			case "ccb": { 
-				var state = 'Browsing Characters'; 
-				break; 
-			}
-			case "vp": { 
-				var state = 'Watching a Video'; 
-				break; 
-			}
+			// Sets RPC activity
+			rpc.setActivity({
+				state: state,
+				details: "Version " + version,
+				startTimestamp: new Date(),
+				largeImageKey: "icon",
+				largeImageText: "Wrapper: Offline",
+				smallImageKey: "Wrapper: Offline",
+				smallImagetext: "Wrapper: Offline",
+			});
+		} else {
+			console.log('Skipping RPC setActivity');
 		}
-		// Sets RPC activity
-		rpc.setActivity({
-			state: state,
-			details: "Version " + version,
-			startTimestamp: new Date(),
-			largeImageKey: "icon",
-			largeImageText: "Wrapper: Offline",
-			smallImageKey: "Wrapper: Offline",
-			smallImagetext: "Wrapper: Offline",
-		});
 	}
 }
 
@@ -61,11 +67,13 @@ rpc.on("ready", () => {
 	});
 });
 // Connects RPC to app
-try {
-	rpc.login({
-		clientId: "866340172874383370"
-	});
-	console.log('Rich prescense is on!')
-} catch (e) {
-	console.log(e);
+if (env.RPC !== "n") {
+	try {
+		rpc.login({
+			clientId: "866340172874383370"
+		});
+		console.log('Rich prescense is on!')
+	} catch (e) {
+		console.log(e);
+	}
 }
