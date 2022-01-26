@@ -729,7 +729,6 @@ if !DEVMODE!==n ( echo: )
 echo Enter 1 to reopen the video list
 echo Enter 2 to open the settings
 echo Enter 3 to import a file
-echo Enter 4 to update Wrapper
 echo Enter clr to clean up the screen
 echo Enter 0 to close Wrapper: Offline
 set /a _rand=(!RANDOM!*67/32768)+1
@@ -759,7 +758,6 @@ set FUCKOFF=n
 if "!choice!"=="1" goto reopen_webpage
 if "!choice!"=="2" goto settings
 if "!choice!"=="3" goto start_importer
-if "!choice!"=="4" goto updatewrapper
 if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
 if /i "!choice!"=="clear" goto wrapperstartedcls
@@ -810,9 +808,6 @@ call settings.bat
 cls
 title Wrapper: Offline v!WRAPPER_VER!
 goto wrapperstartedcls
-
-:updatewrapper
-echo This will require you to restart Wrapper: Offline, if you want to continue, press y, otherwise press n.
 
 :youfuckoff
 echo You fuck off.
