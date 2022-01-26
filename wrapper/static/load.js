@@ -48,6 +48,17 @@ module.exports = function (req, res, url) {
 						content = fs.readFileSync(path, "utf8");
 						content = content.replace(/WRAPPER_VER/g, version);
 						content = content.replace(/WRAPPER_BLD/g, build);
+						if (env.DARK_MODE == "y") {
+							content = content.replace(/LIST_CSS/g, '../css/list.css');
+							content = content.replace(/GLOBAL_CSS/g, '../css/global.css');
+							content = content.replace(/CREATE_CSS/g, '../css/create.css');
+							content = content.replace(/SWF_CSS/g, '../css/swf.css');
+						} else {
+							content = content.replace(/LIST_CSS/g, '../css/list-light.css');
+							content = content.replace(/GLOBAL_CSS/g, '../css/global-light.css');
+							content = content.replace(/CREATE_CSS/g, '../css/create-light.css');
+							content = content.replace(/SWF_CSS/g, '../css/swf-light.css');
+						}
 						res.end(content);
 					} else {
 						fs.createReadStream(path).pipe(res);
