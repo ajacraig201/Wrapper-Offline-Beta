@@ -729,6 +729,7 @@ if !DEVMODE!==n ( echo: )
 echo Enter 1 to reopen the video list
 echo Enter 2 to open the settings
 echo Enter 3 to import a file
+echo Enter 4 to update Wrapper
 echo Enter clr to clean up the screen
 echo Enter 0 to close Wrapper: Offline
 set /a _rand=(!RANDOM!*67/32768)+1
@@ -758,6 +759,7 @@ set FUCKOFF=n
 if "!choice!"=="1" goto reopen_webpage
 if "!choice!"=="2" goto settings
 if "!choice!"=="3" goto start_importer
+if "!choice!"=="4" goto updatewrapper
 if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
 if /i "!choice!"=="clear" goto wrapperstartedcls
@@ -808,6 +810,9 @@ call settings.bat
 cls
 title Wrapper: Offline v!WRAPPER_VER!
 goto wrapperstartedcls
+
+:updatewrapper
+echo This will require you to restart Wrapper: Offline, if you want to continue, press y, otherwise press n.
 
 :youfuckoff
 echo You fuck off.
@@ -984,35 +989,28 @@ goto grr
 
 :configcopy
 if not exist utilities ( md utilities )
-echo :: Wrapper: Offline Config>> utilities\config.bat
-echo :: This file is modified by settings.bat. It is not organized, but comments for each setting have been added.>> utilities\config.bat
-echo :: You should be using settings.bat, and not touching this. Offline relies on this file remaining consistent, and it's easy to mess that up.>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Opens this file in Notepad when run>> utilities\config.bat
 echo setlocal>> utilities\config.bat
 echo if "%%SUBSCRIPT%%"=="" ( start notepad.exe "%%CD%%\%%~nx0" ^& exit )>> utilities\config.bat
 echo endlocal>> utilities\config.bat
 echo:>> utilities\config.bat
-echo :: Shows exactly Offline is doing, and never clears the screen. Useful for development and troubleshooting. Default: n>> utilities\config.bat
 echo set VERBOSEWRAPPER=n>> utilities\config.bat
 echo:>> utilities\config.bat
-echo :: Won't check for dependencies (flash, node, etc) and goes straight to launching. Useful for speedy launching post-install. Default: n>> utilities\config.bat
 echo set SKIPCHECKDEPENDS=n>> utilities\config.bat
 echo:>> utilities\config.bat
-echo :: Won't install dependencies, regardless of check results. Overridden by SKIPCHECKDEPENDS. Mostly useless, why did I add this again? Default: n>> utilities\config.bat
-echo set SKIPDEPENDINSTALL=n>> utilities\config.bat
-echo:>> utilities\config.bat
-echo :: Runs through all of the scripts code, while never launching or installing anything. Useful for development. Default: n>> utilities\config.bat
 echo set DRYRUN=n>> utilities\config.bat
 echo:>> utilities\config.bat
-echo :: Makes it so both the settings and the Wrapper launcher shows developer options. Default: n>> utilities\config.bat
 echo set DEVMODE=n>> utilities\config.bat
 echo:>> utilities\config.bat
-echo :: Tells settings.bat which port the frontend is hosted on. ^(If changed manually, you MUST also change the value of "SERVER_PORT" to the same value in wrapper\env.json^) Default: 4343>> utilities\config.bat
 echo set PORT=4343>> utilities\config.bat
 echo:>> utilities\config.bat
-echo :: Automatically restarts the NPM whenever it crashes. Default: y>> utilities\config.bat
-echo set AUTONODE=y>> utilities\config.bat
+echo set AUTOUPDATE=n>> utilities\config.bat
+echo:>> utilities\config.bat
+echo set RPC=n>> utilities\config.bat
+echo:>> utilities\config.bat
+echo set DARK_MODE=y>> utilities\config.bat
+echo:>> utilities\config.bat
+echo set DEBUG_VM=n>> utilities\config.bat
+echo:>> utilities\config.bat
 echo:>> utilities\config.bat
 goto returnfromconfigcopy
 
