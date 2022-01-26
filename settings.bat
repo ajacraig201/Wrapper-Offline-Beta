@@ -278,7 +278,17 @@ if "!choice!"=="?6" (
 	goto reaskoptionscreen
 )
 :: Truncated themelist
-if "!choice!"=="7" goto allthemechange
+if "!choice!"=="7" (
+	set TOTOGGLE=TRUNCATE_THEMES
+	if !TRUNCATE_THEMES!==y (
+		set TOGGLETO=n
+	) else (
+		set TOGGLETO=y
+	)
+	set CFGLINE=23
+	set ISENV=1
+	goto toggleoption
+)
 if "!choice!"=="?7" (
 	echo Cuts down the amount of themes that clog up the themelist in the videomaker.
 	echo Keeping this off is highly suggested.
@@ -440,7 +450,8 @@ if "!isenv!"=="1" (
 	echo 	"NODE_TLS_REJECT_UNAUTHORIZED": "0",>> !env!
 	echo 	"RPC": "!RPC!",>> !env!
 	echo 	"DARK_MODE": "!DARK_MODE!",>> !env!
-	echo 	"DEBUG_VM": "!DEBUG_VM!">> !env!
+	echo 	"DEBUG_VM": "!DEBUG_VM!",>> !env!
+	echo 	"TRUNCATE_THEMES": "!TRUNCATE_THEMES!">> !env!
 	echo }>> !env!
 )
 if !BACKTODEFAULTTOGGLE!==y goto backtodefault
