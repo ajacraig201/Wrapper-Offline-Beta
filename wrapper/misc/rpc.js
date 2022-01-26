@@ -8,7 +8,7 @@ const env = Object.assign(process.env,
 let version = env.WRAPPER_VER;
 
 // Discord rich presence
-if (env.RPC !== "n") {
+if (env.RPC == "y") {
 	const rpc = new RPC.Client({
 		transport: "ipc"
 	});
@@ -16,7 +16,7 @@ if (env.RPC !== "n") {
 
 module.exports = {
 	setActivity(page) {
-		if (env.RPC !== "n") {
+		if (env.RPC == "y") {
 			switch (page) {
 				case "vl": { 
 					var state = 'Video List'; 
@@ -55,7 +55,7 @@ module.exports = {
 	}
 }
 
-if (env.RPC !== "n") {
+if (env.RPC !== "y") {
 	rpc.on("ready", () => {
 		rpc.setActivity({
 			state: 'Starting',
@@ -69,7 +69,7 @@ if (env.RPC !== "n") {
 	});
 }
 // Connects RPC to app
-if (env.RPC !== "n") {
+if (env.RPC !== "y") {
 	try {
 		rpc.login({
 			clientId: "866340172874383370"
