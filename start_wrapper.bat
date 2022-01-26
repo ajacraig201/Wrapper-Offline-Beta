@@ -1006,6 +1006,8 @@ echo set DARK_MODE=y>> utilities\config.bat
 echo:>> utilities\config.bat
 echo set DEBUG_VM=n>> utilities\config.bat
 echo:>> utilities\config.bat
+echo set TRUNCATE_THEMES=y>> utilities\config.bat
+echo:>> utilities\config.bat
 echo:>> utilities\config.bat
 goto returnfromconfigcopy
 
