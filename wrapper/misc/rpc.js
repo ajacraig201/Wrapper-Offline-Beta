@@ -8,11 +8,9 @@ const env = Object.assign(process.env,
 let version = env.WRAPPER_VER;
 
 // Discord rich presence
-if (env.RPC == "y") {
-	const rpc = new RPC.Client({
-		transport: "ipc"
-	});
-}
+const rpc = new RPC.Client({
+	transport: "ipc"
+});
 
 module.exports = {
 	setActivity(page) {
