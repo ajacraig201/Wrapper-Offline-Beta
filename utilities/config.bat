@@ -14,3 +14,9 @@ set PORT=4343
 
 set AUTOUPDATE=y
 
+set RPC=n
+
+set DARK_MODE=y
+
+set DEBUG_VM=n
+
