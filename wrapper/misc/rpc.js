@@ -55,17 +55,19 @@ module.exports = {
 	}
 }
 
-rpc.on("ready", () => {
-	rpc.setActivity({
-		state: 'Starting',
-		details: "Version " + version,
-		startTimestamp: new Date(),
-		largeImageKey: "icon",
-		largeImageText: "Wrapper: Offline",
-		smallImageKey: "Wrapper: Offline",
-		smallImagetext: "Wrapper: Offline",
+if (env.RPC !== "n") {
+	rpc.on("ready", () => {
+		rpc.setActivity({
+			state: 'Starting',
+			details: "Version " + version,
+			startTimestamp: new Date(),
+			largeImageKey: "icon",
+			largeImageText: "Wrapper: Offline",
+			smallImageKey: "Wrapper: Offline",
+			smallImagetext: "Wrapper: Offline",
+		});
 	});
-});
+}
 // Connects RPC to app
 if (env.RPC !== "n") {
 	try {
