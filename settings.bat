@@ -120,7 +120,7 @@ if !DARK_MODE!==y (
 	echo ^(6^) Dark mode is[91m OFF [0m
 )
 :: Truncated themelist
-if exist "wrapper\_THEMES\_themelist-allthemes.xml" (
+if !TRUNCATE_THEMES!==y (
 	echo ^(7^) Truncated themelist is[92m ON [0m
 ) else ( 
 	echo ^(7^) Truncated themelist is[91m OFF [0m
