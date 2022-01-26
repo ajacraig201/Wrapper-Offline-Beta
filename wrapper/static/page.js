@@ -2,6 +2,7 @@ const fUtil = require("../misc/file");
 const stuff = require("./info");
 const rpc = require("../misc/rpc");
 const http = require("http");
+const env = require("../env");
 
 function toAttrString(table) {
 	return typeof table == "object"
@@ -22,6 +23,19 @@ function toObjectString(attrs, params) {
 		.join(" ")}>${toParamString(params)}</object>`;
 }
 
+if (env.DEBUG_VM == "y") {
+	var utoken = '60';
+} else {
+	var utoken = '30';
+}
+
+if (env.DARK_MODE == "y") {
+	var globalcss = '/pages/css/global.css';
+	var swfcss = '/pages/css/swf.css';
+} else {
+	var globalcss = '/pages/css/global-light.css';
+	var swfcss = '/pages/css/swf-light.css';
+}
 /**
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
@@ -49,7 +63,7 @@ module.exports = function (req, res, url) {
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
 					original_asset_id: query["id"] || null,
 					themeId: "family",
-					ut: 60,
+					ut: utoken,
 					bs: "adam",
 					appCode: "go",
 					page: "",
@@ -82,7 +96,7 @@ module.exports = function (req, res, url) {
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
 					original_asset_id: query["id"] || null,
 					themeId: "family",
-					ut: 30,
+					ut: utoken,
 					appCode: "go",
 					page: "",
 					siteId: "go",
@@ -120,7 +134,7 @@ module.exports = function (req, res, url) {
 					storePath: process.env.STORE_URL + "/<store>",
 					isEmbed: 1,
 					ctc: "go",
-					ut: 30,
+					ut: utoken,
 					bs: "default",
 					appCode: "go",
 					page: "",
@@ -156,7 +170,7 @@ module.exports = function (req, res, url) {
 				flashvars: {
 					apiserver: "/",
 					storePath: process.env.STORE_URL + "/<store>",
-					ut: 30,
+					ut: utoken,
 					autostart: 1,
 					isWide: 1,
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
@@ -180,7 +194,7 @@ module.exports = function (req, res, url) {
 				flashvars: {
 					apiserver: "/",
 					storePath: process.env.STORE_URL + "/<store>",
-					ut: 30,
+					ut: utoken,
 					autostart: 0,
 					isWide: 1,
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
@@ -212,8 +226,8 @@ module.exports = function (req, res, url) {
 			}
 		</script>
 		<link rel="stylesheet" type="text/css" href="/pages/css/modern-normalize.css">
-		<link rel="stylesheet" type="text/css" href="/pages/css/global.css">
-		<link rel="stylesheet" type="text/css" href="/pages/css/swf.css">
+		<link rel="stylesheet" type="text/css" href="${globalcss}">
+		<link rel="stylesheet" type="text/css" href="${swfcss}">
 	</head>
 	
 	<header id="header">
