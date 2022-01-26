@@ -45,9 +45,10 @@ if exist "patch.jpg" echo MESSAGE GOES HERE && goto end
 
 :: Preload variable
 set CFG=utilities\config.bat
-set TMPCFG=utilities\tempconfig.bat
-set META=utilities\metadata.bat
 set ENV=wrapper\env.json
+set TMPCFG=utilities\tempconfig.bat
+set TMPENV=wrapper\tempenv.json
+set META=utilities\metadata.bat
 set BACKTODEFAULTTOGGLE=n
 set CHROMIUMENABLE=n
 set CHROMIUMDISABLE=n
@@ -94,17 +95,17 @@ if !SKIPCHECKDEPENDS!==n (
 ) else ( 
 	echo ^(2^) Checking dependencies is[91m OFF [0m
 )
-:: Waveforms
-if exist "wrapper\static\info-nowave*.json" (
-	echo ^(3^) Waveforms are[92m ON [0m
-) else ( 
-	echo ^(3^) Waveforms are[91m OFF [0m
-)
 :: Debug mode
-if exist "wrapper\static\page-nodebug.js" (
-	echo ^(4^) Debug videomaker is[92m ON [0m
+if !DEBUG_VM!==y (
+	echo ^(3^) Debug videomaker is[92m ON [0m
 ) else ( 
-	echo ^(4^) Debug videomaker is[91m OFF [0m
+	echo ^(3^) Debug videomaker is[91m OFF [0m
+)
+:: RPC
+if !RPC!==y (
+	echo ^(4^) Discord RPC is[92m ON [0m
+) else ( 
+	echo ^(4^) Discord RPC is[91m OFF [0m
 )
 :: Skip updating
 if !AUTOUPDATE!==y (
@@ -113,10 +114,9 @@ if !AUTOUPDATE!==y (
 	echo ^(5^) Auto updating is[91m OFF [0m
 )
 :: Dark mode
-if exist "wrapper\pages\css\global-light.css" (
+if !DARK_MODE!==y (
 	echo ^(6^) Dark mode is[92m ON [0m
-)
-if exist "wrapper\pages\css\global-dark.css" ( 
+) else (
 	echo ^(6^) Dark mode is[91m OFF [0m
 )
 :: Truncated themelist
@@ -171,6 +171,7 @@ if "!choice!"=="1" (
 		set TOGGLETO=n
 	)
 	set CFGLINE=5
+	set ISENV=0
 	goto toggleoption
 )
 if "!choice!"=="?1" (
@@ -188,6 +189,7 @@ if "!choice!"=="2" (
 		set TOGGLETO=n
 	)
 	set CFGLINE=7
+	set ISENV=0
 	goto toggleoption
 )
 if "!choice!"=="?2" (
@@ -196,26 +198,42 @@ if "!choice!"=="?2" (
 	echo If you're on a new computer, or having issues with security messages, you may wanna turn this back on.
 	goto reaskoptionscreen
 )
-:: Waveforms
-if "!choice!"=="3" goto waveformchange
-if "!choice!"=="?3" (
-	echo By default, waveforms for audio are generated in the video editor.
-	echo:
-	echo While useful, the editor freezes while it generates, which could be too annoying or slow for some.
-	echo:
-	echo Turning this off will simply add a repeating pre-made pattern in place of true waveforms.
-	goto reaskoptionscreen
-)
 :: Debug Mode
-if "!choice!"=="4" goto debugmodechange
-if "!choice!"=="?4" (
-	echo By default, debug mode is enabled in the video editor.
+if "!choice!"=="3" (
+	set TOTOGGLE=DEBUG_VM
+	if !DEBUG_VM!==n (
+		set TOGGLETO=y
+	) else (
+		set TOGGLETO=n
+	)
+	set CFGLINE=21
+	set ISENV=1
+	goto toggleoption
+)
+if "!choice!"=="?3" (
+	echo By default, debug mode is disabled in the video editor.
 	echo:
 	echo While useful with showing asset IDs and paths, it freezes when you use character search in ANY theme, 
         echo which can be very annoying to some.
         echo:
 	echo Turning this off will stop the asset IDs and paths from showing, and in addition,
         echo will also make character search work again.
+	goto reaskoptionscreen
+)
+:: RPC
+if "!choice!"=="4" (
+	set TOTOGGLE=RPC
+	if !RPC!==y (
+		set TOGGLETO=n
+	) else (
+		set TOGGLETO=y
+	)
+	set CFGLINE=17
+	set ISENV=1
+	goto toggleoption
+)
+if "!choice!"=="?4" (
+	echo rpc description i do not feel like writing this
 	goto reaskoptionscreen
 )
 :: Auto Update
@@ -227,6 +245,7 @@ if "!choice!"=="5" (
 		set TOGGLETO=y
 	)
 	set CFGLINE=15
+	set ISENV=0
 	goto toggleoption
 )
 if "!choice!"=="?5" (
@@ -238,7 +257,17 @@ if "!choice!"=="?5" (
 	goto reaskoptionscreen
 )
 :: Dark Mode
-if "!choice!"=="6" goto darkmodechange
+if "!choice!"=="6" (
+	set TOTOGGLE=DARK_MODE
+	if !DARK_MODE!==n (
+		set TOGGLETO=y
+	) else (
+		set TOGGLETO=n
+	)
+	set CFGLINE=19
+	set ISENV=1
+	goto toggleoption
+)
 if "!choice!"=="?6" (
 	echo By default, dark mode is enabled on the video and theme lists.
         echo:
@@ -265,6 +294,7 @@ if "!choice!"=="8" (
 		set TOGGLETO=n
 	)
 	set CFGLINE=11
+	set ISENV=0
 	goto toggleoption
 )
 if "!choice!"=="?8" (
@@ -333,6 +363,7 @@ if !DEVMODE!==y (
 			set TOGGLETO=n
 		)
 		set CFGLINE=9
+		set ISENV=0
 		goto toggleoption
 	)
 	if /i "!choice!"=="?D1" (
@@ -382,9 +413,36 @@ echo:>> !tmpcfg!
 more +!afterline! !cfg!>> !tmpcfg!
 :: Make our temp file the normal file
 copy /y !tmpcfg! !cfg! >nul
-del !tmpcfg!
+del !tmpcfg!-
 :: Set in here for displaying
 set !totoggle!=!toggleto!
+if "!isenv!"=="1" (
+	if exist "!env!" del "!env!"
+	echo {>> !env!
+	echo 	"CHAR_BASE_URL": "https://localhost:4664/characters",>> !env!
+	echo 	"THUMB_BASE_URL": "https://localhost:4664/thumbnails",>> !env!
+	echo 	"XML_HEADER": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",>> !env!
+	echo 	"CROSSDOMAIN": "<cross-domain-policy><allow-access-from domain=\"*\"/></cross-domain-policy>",>> !env!
+	echo 	"FILE_WIDTH": 1000,>> !env!
+	echo 	"GATHER_THREADS": 100,>> !env!
+	echo 	"GATHER_THRESH1": 250000000,>> !env!
+	echo 	"GATHER_THRESH2": 328493000,>> !env!
+	echo 	"GATHER_THRESH3": 400000000,>> !env!
+	echo 	"FILE_NUM_WIDTH": 9,>> !env!
+	echo 	"XML_NUM_WIDTH": 3,>> !env!
+	echo 	"SERVER_PORT": !PORT!,>> !env!
+	echo 	"SAVED_FOLDER": "./_SAVED",>> !env!
+	echo 	"CACHÉ_FOLDER": "./_CACHÉ",>> !env!
+	echo 	"THEME_FOLDER": "./_THEMES",>> !env!
+	echo 	"PREMADE_FOLDER": "./_PREMADE",>> !env!
+	echo 	"EXAMPLE_FOLDER": "./_EXAMPLES",>> !env!
+	echo 	"WRAPPER_VER": "!WRAPPER_VER!",>> !env!
+	echo 	"NODE_TLS_REJECT_UNAUTHORIZED": "0",>> !env!
+	echo 	"RPC": "!RPC!",>> !env!
+	echo 	"DARK_MODE": "!DARK_MODE!",>> !env!
+	echo 	"DEBUG_VM": "!DEBUG_VM!">> !env!
+	echo }>> !env!
+)
 if !BACKTODEFAULTTOGGLE!==y goto backtodefault
 if !BACKTOCUSTOMTOGGLE!==y goto backtocustom
 if !BACKTOCUSTOMTOGGLE2!==y goto backtocustom2
@@ -440,7 +498,10 @@ echo 	"THEME_FOLDER": "./_THEMES",>> !env!
 echo 	"PREMADE_FOLDER": "./_PREMADE",>> !env!
 echo 	"EXAMPLE_FOLDER": "./_EXAMPLES",>> !env!
 echo 	"WRAPPER_VER": "!WRAPPER_VER!",>> !env!
-echo 	"NODE_TLS_REJECT_UNAUTHORIZED": "0">> !env!
+echo 	"NODE_TLS_REJECT_UNAUTHORIZED": "0",>> !env!
+echo 	"RPC": "!RPC!",>> !env!
+echo 	"DARK_MODE": "!DARK_MODE!",>> !env!
+echo 	"DEBUG_VM": "!DEBUG_VM!">> !env!
 echo }>> !env!
 set TOTOGGLE=PORT
 set TOGGLETO=!PORTNUMBER!
