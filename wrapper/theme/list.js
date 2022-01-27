@@ -78,6 +78,7 @@ module.exports = function (req, res, url) {
 		let buffer = buffer.replace(/%THEMEEXTRA/g, ``);
 	} else {
 		let buffer = buffer.replace(/%THEMEEXTRA/g, `\n${extrathemes}`);
+	}
 	res.setHeader("Content-Type", "application/zip");
 	fUtil.makeZip(0, "themelist.xml", buffer).then((b) => res.end(b));
 	return true;
