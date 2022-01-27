@@ -92,13 +92,23 @@ goto configavailable
 
 :: Restore config
 :configmissing
-echo Settings are missing for some reason?
-echo Restoring...
+echo Creating config.bat...
 goto configcopy
 :returnfromconfigcopy
 if not exist utilities\config.bat ( echo Something is horribly wrong. You may be in a read-only system/admin folder. & pause & exit )
 call utilities\config.bat
 :configavailable
+
+if not exist wrapper\env.json ( goto envmissing )
+goto envavailable
+
+:: Restore env
+:envmissing
+echo Creating env.json...
+goto envcopy
+:returnfromenvcopy
+if not exist wrapper\env.json ( echo Something is horribly wrong. You may be in a read-only system/admin folder. & pause & exit )
+:envavailable
 
 :: check for updates
 if !AUTOUPDATE!==y ( 
@@ -1010,6 +1020,35 @@ echo set TRUNCATE_THEMES=y>> utilities\config.bat
 echo:>> utilities\config.bat
 echo:>> utilities\config.bat
 goto returnfromconfigcopy
+
+:envcopy
+	set ENV = wrapper\env.json
+	echo {>> !env!
+	echo 	"CHAR_BASE_URL": "https://localhost:4664/characters",>> !env!
+	echo 	"THUMB_BASE_URL": "https://localhost:4664/thumbnails",>> !env!
+	echo 	"XML_HEADER": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",>> !env!
+	echo 	"CROSSDOMAIN": "<cross-domain-policy><allow-access-from domain=\"*\"/></cross-domain-policy>",>> !env!
+	echo 	"FILE_WIDTH": 1000,>> !env!
+	echo 	"GATHER_THREADS": 100,>> !env!
+	echo 	"GATHER_THRESH1": 250000000,>> !env!
+	echo 	"GATHER_THRESH2": 328493000,>> !env!
+	echo 	"GATHER_THRESH3": 400000000,>> !env!
+	echo 	"FILE_NUM_WIDTH": 9,>> !env!
+	echo 	"XML_NUM_WIDTH": 3,>> !env!
+	echo 	"SERVER_PORT": !PORT!,>> !env!
+	echo 	"SAVED_FOLDER": "./_SAVED",>> !env!
+	echo 	"CACHÉ_FOLDER": "./_CACHÉ",>> !env!
+	echo 	"THEME_FOLDER": "./_THEMES",>> !env!
+	echo 	"PREMADE_FOLDER": "./_PREMADE",>> !env!
+	echo 	"EXAMPLE_FOLDER": "./_EXAMPLES",>> !env!
+	echo 	"WRAPPER_VER": "!WRAPPER_VER!",>> !env!
+	echo 	"NODE_TLS_REJECT_UNAUTHORIZED": "0",>> !env!
+	echo 	"RPC": "!RPC!",>> !env!
+	echo 	"DARK_MODE": "!DARK_MODE!",>> !env!
+	echo 	"DEBUG_VM": "!DEBUG_VM!",>> !env!
+	echo 	"TRUNCATE_THEMES": "!TRUNCATE_THEMES!">> !env!
+	echo }>> !env!
+goto returnfromenvcopy
 
 :metacopy
 if not exist utilities ( md utilities )
