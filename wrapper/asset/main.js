@@ -19,7 +19,7 @@ module.exports = {
 			var dash = aId.lastIndexOf("-");
 			var name = aId.substr(0, dash);
 			var ext = aId.substr(dot + 1);
-			var fMode = aId.substr(dash + 1, dot - dash - 1);'
+			var fMode = aId.substr(dash + 1, dot - dash - 1);
 			switch (fMode) {
 				case "soundeffect":
 				case "voiceover":
