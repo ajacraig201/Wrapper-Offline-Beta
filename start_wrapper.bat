@@ -739,6 +739,9 @@ if !DEVMODE!==n ( echo: )
 echo Enter 1 to reopen the video list
 echo Enter 2 to open the settings
 echo Enter 3 to import a file
+if exist .git (
+	echo Enter 4 to update wrapper
+)
 echo Enter clr to clean up the screen
 echo Enter 0 to close Wrapper: Offline
 set /a _rand=(!RANDOM!*67/32768)+1
@@ -768,6 +771,7 @@ set FUCKOFF=n
 if "!choice!"=="1" goto reopen_webpage
 if "!choice!"=="2" goto settings
 if "!choice!"=="3" goto start_importer
+vif "!choice!"=="4" goto update_wrapper
 if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
 if /i "!choice!"=="clear" goto wrapperstartedcls
@@ -798,6 +802,39 @@ goto wrapperidle
 echo Opening the importer...
 start "" "utilities\import.bat"
 goto wrapperidle
+
+:update_wrapper
+echo This will close Wrapper: Offline, are you sure you want to continue?
+echo Be sure to save all your work.
+echo Type Y to quit, and N to go back.
+:updateretry
+set /p UPDATECHOICE= Response:
+echo:
+if /i "!updatechoice!"=="y" goto continueupdate
+if /i "!updatechoice!"=="yes" goto continueupdate
+if /i "!updatechoice!"=="n" goto wrapperstartedcls
+if /i "!updatechoice!"=="no" goto wrapperstartedcls
+echo You must answer Yes or No. && goto updateretry
+:continueupdate
+cls
+echo Updating...
+if exist utilities\PortableGit\bin\git.exe (
+	if exist .git (
+		call utilities\PortableGit\bin\git.exe checkout -f main
+		call utilities\PortableGit\bin\git.exe fetch --all
+		call utilities\PortableGit\bin\git.exe reset --hard origin/main
+		PING -n 3 127.0.0.1>nul
+		goto point_extraction
+	) else (
+		echo Update failed!
+		echo How did you manage to get rid of the .git folder before the update started???
+		goto wrapperstartedcls
+	)
+) else (
+	echo Update failed!
+	echo Maybe don't delete PortableGit next time?
+	goto wrapperstartedcls
+)
 
 :open_server
 	echo Opening the server page...
