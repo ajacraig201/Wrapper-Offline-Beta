@@ -1,6 +1,7 @@
 const chars = require("../character/main");
 const fUtil = require("../misc/file");
 const caché = require("./caché");
+const mp3Duration = require("mp3-duration");
 
 module.exports = {
 	load(mId, aId) {
@@ -34,7 +35,33 @@ module.exports = {
 			var name = aId.substr(0, dash);
 			var ext = aId.substr(dot + 1);
 			var fMode = aId.substr(dash + 1, dot - dash - 1);
-			ret.push({ id: aId, ext: ext, name: name, mode: fMode });
+			switch (fMode) {
+				case "soundeffect":
+				case "voiceover":
+				case "bgmusic": {
+					var subtype = fMode;
+					var fMode = "sound";
+					break;
+				}
+				default: { 
+					break;
+				}
+			}
+			if (fMode == "sound") {
+				this.load(mId, aId).then(([buffer]) => {
+					mp3Duration(buffer, (e, d) => {
+						var dur = d * 1e3;
+						if (e || !dur) {
+							var dur = '5000'
+						}
+						ret.push({ id: aId, ext: ext, name: name, mode: fMode, subtype: subtype, duration: dur });
+					});
+				}).catch((e) => {
+					console.log('Asset loading failed');
+				});
+			} else {
+				ret.push({ id: aId, ext: ext, name: name, mode: fMode });
+			}
 		});
 		return ret;
 	},
