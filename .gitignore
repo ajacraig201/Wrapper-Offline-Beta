@@ -7,10 +7,7 @@ wrapper/_CACHÉ/*.xml
 wrapper/_SAVED/*.png
 wrapper/_SAVED/*.xml
 wrapper/_THEMES/import.xml
-wrapper/main.js
-wrapper/main-rpc.js
-wrapper/main-norpc.js
-wrapper/static/info-*.json
+wrapper/env.json
 !_*/_NO_REMÖVE
 utilities/backups/*
 utilities/legacy/import_these/*
