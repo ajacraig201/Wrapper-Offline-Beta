@@ -38,7 +38,7 @@ module.exports = {
 						mp3Duration(buffer, (e, d) => {
 							var dur = d * 1e3;
 							if (e || !dur) {
-								var dur = '5000'
+								console.log('Asset loading failed');
 							}
 							ret.push({ id: aId, ext: ext, name: name, mode: fMode, subtype: subtype, duration: dur });
 						});
