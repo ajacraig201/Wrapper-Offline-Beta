@@ -72,7 +72,7 @@ if (env.RPC !== "y") {
 		rpc.login({
 			clientId: "866340172874383370"
 		});
-		console.log('Rich prescense is on!')
+		console.log('Rich presence is on!')
 	} catch (e) {
 		console.log(e);
 	}
