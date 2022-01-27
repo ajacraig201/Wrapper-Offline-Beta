@@ -13,7 +13,7 @@ var size = 0;
 // IMPORTANT: serialises the cachéd files into the dictionaries.
 fs.readdirSync(cachéFolder).forEach((v) => {
 	const index = v.indexOf(".");
-	const prefix = v.substr(0, index);
+	const prefix = '1'
 	const suffix = v.substr(index + 1);
 
 	if (!localCaché[prefix]) localCaché[prefix] = [];
@@ -51,9 +51,9 @@ module.exports = {
 	 */
 	save(mId, aId, buffer) {
 		if (!this.validAssetId(aId)) return;
-		localCaché[mId] = localCaché[mId] || [];
-		var stored = localCaché[mId];
-		const path = `${cachéFolder}/${mId}.${aId}`;
+		localCaché['1'] = localCaché['1'] || [];
+		var stored = localCaché['1'];
+		const path = `${cachéFolder}/${aId}`;
 
 		if (!stored.includes(aId)) stored.push(aId);
 		if (fs.existsSync(path)) size -= fs.statSync(path).size;
@@ -83,7 +83,7 @@ module.exports = {
 	loadTable(mId) {
 		const buffers = {};
 		this.list(mId).forEach((aId) => {
-			buffers[aId] = fs.readFileSync(`${cachéFolder}/${mId}.${aId}`);
+			buffers[aId] = fs.readFileSync(`${cachéFolder}/${aId}`);
 		});
 		return buffers;
 	},
@@ -94,7 +94,7 @@ module.exports = {
 	 * @returns {cTableType}
 	 */
 	list(mId) {
-		return localCaché[mId] || [];
+		return localCaché['1'] || [];
 	},
 	/**
 	 *
@@ -105,8 +105,8 @@ module.exports = {
 	 * @param {string} suffix
 	 */
 	newItem(buffer, mId, prefix = "", suffix = "") {
-		localCaché[mId] = localCaché[mId] || [];
-		var stored = localCaché[mId];
+		localCaché['1'] = localCaché['1'] || [];
+		var stored = localCaché['1'];
 		var aId = this.generateId(prefix, suffix, stored);
 		this.save(mId, aId, buffer);
 		return aId;
@@ -119,10 +119,10 @@ module.exports = {
 	 */
 	load(mId, aId) {
 		if (!this.validAssetId(aId)) return;
-		const stored = localCaché[mId];
+		const stored = localCaché['1'];
 		if (!stored) return null;
 
-		const path = `${cachéFolder}/${mId}.${aId}`;
+		const path = `${cachéFolder}/${aId}`;
 		stored.time = new Date();
 		if (stored.includes(aId)) {
 			return fs.readFileSync(path);
@@ -151,16 +151,16 @@ module.exports = {
 	 * @returns {void}
 	 */
 	clearTable(mId, setToEmpty = true) {
-		const stored = localCaché[mId];
+		const stored = localCaché['1'];
 		if (!stored) return;
 		stored.forEach((aId) => {
 			if (aId != "time") {
-				var path = `${cachéFolder}/${mId}.${aId}`;
+				var path = `${cachéFolder}/${aId}`;
 				size -= fs.statSync(path).size;
 				fs.unlinkSync(path);
 			}
 		});
-		if (setToEmpty) localCaché[mId] = [];
-		else delete localCaché[mId];
+		if (setToEmpty) localCaché['1'] = [];
+		else delete localCaché['1'];
 	},
 };
