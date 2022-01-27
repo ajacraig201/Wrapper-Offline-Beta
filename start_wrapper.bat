@@ -1059,7 +1059,7 @@ echo:>> utilities\config.bat
 goto returnfromconfigcopy
 
 :envcopy
-	set ENV = wrapper\env.json
+	set ENV=wrapper\env.json
 	echo {>> !env!
 	echo 	"CHAR_BASE_URL": "https://localhost:4664/characters",>> !env!
 	echo 	"THUMB_BASE_URL": "https://localhost:4664/thumbnails",>> !env!
