@@ -80,6 +80,6 @@ module.exports = function (req, res, url) {
 		let buffer = buffer.replace(/THEMEEXTRA/g, `\n${extrathemes}`);
 	}
 	res.setHeader("Content-Type", "application/zip");
-	fUtil.makeZip(, "themelist.xml", buffer).then((b) => res.end(b));
+	fUtil.makeZip(0, "themelist.xml", buffer).then((b) => res.end(b));
 	return true;
 };
