@@ -33,7 +33,7 @@ module.exports = {
 				}
 			}
 			if (fMode == mode) {
-				if (fMode == "sound" {
+				if (fMode == "sound") {
 					this.load(mId, aId).then(([buffer]) => {
 						mp3Duration(buffer, (e, d) => {
 							var dur = d * 1e3;
