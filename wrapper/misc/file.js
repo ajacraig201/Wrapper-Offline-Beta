@@ -116,12 +116,19 @@ module.exports = {
 	 * @param {string} fileName
 	 * @param {string} zipName
 	 */
-	makeZip(fileName, zipName) {
-		if (!fs.existsSync(fileName)) return Promise.reject();
-		const buffer = fs.readFileSync(fileName);
-		const zip = nodezip.create();
-		this.addToZip(zip, zipName, buffer);
-		return zip.zip();
+	makeZip(fileName, zipName, definedbuffer = false) {
+		if (fileName !== "0") {
+			if (!fs.existsSync(fileName)) return Promise.reject();
+			const buffer = fs.readFileSync(fileName);
+			const zip = nodezip.create();
+			this.addToZip(zip, zipName, buffer);
+			return zip.zip();
+		} else {
+			if (!definedbuffer) return Promise.reject();
+			const zip = nodezip.create();
+			this.addToZip(zip, zipName, definedbuffer);
+			return zip.zip();
+		}
 	},
 	/**
 	 *
