@@ -73,13 +73,13 @@ const extrathemes = `
 
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/goapi/getThemeList/") return;
-	let buffer = fs.readFileSync(`${folder}/_themelist.xml}`);
+	let buffer = fs.readFileSync(`${folder}/_themelist.xml`);
 	if (process.env.TRUNCATE_THEMES == "y") {
 		let buffer = buffer.replace(/THEMEEXTRA/g, ``);
 	} else {
 		let buffer = buffer.replace(/THEMEEXTRA/g, `\n${extrathemes}`);
 	}
 	res.setHeader("Content-Type", "application/zip");
-	fUtil.makeZip(0, "themelist.xml", buffer).then((b) => res.end(b));
+	fUtil.makeZip(, "themelist.xml", buffer).then((b) => res.end(b));
 	return true;
 };
