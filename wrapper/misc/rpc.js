@@ -49,7 +49,7 @@ module.exports = {
 	}
 }
 
-if (env.RPC !== "y") {
+if (env.RPC == "y") {
 	rpc.on("ready", () => {
 		rpc.setActivity({
 			state: 'Starting',
@@ -63,7 +63,7 @@ if (env.RPC !== "y") {
 	});
 }
 // Connects RPC to app
-if (env.RPC !== "y") {
+if (env.RPC == "y") {
 	try {
 		rpc.login({
 			clientId: "866340172874383370"
