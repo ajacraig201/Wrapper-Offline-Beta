@@ -771,7 +771,7 @@ set FUCKOFF=n
 if "!choice!"=="1" goto reopen_webpage
 if "!choice!"=="2" goto settings
 if "!choice!"=="3" goto start_importer
-vif "!choice!"=="4" goto update_wrapper
+if "!choice!"=="4" goto update_wrapper
 if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
 if /i "!choice!"=="clear" goto wrapperstartedcls
