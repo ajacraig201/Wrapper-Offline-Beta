@@ -33,7 +33,9 @@ module.exports = function (req, res, url) {
 			}
 
 			if (rpcValue !== 'none') {
-				rpc.setActivity(rpcValue);
+				if (env.RPC == "y") {
+					rpc.setActivity(rpcValue);
+				}
 			}
 
 			try {
