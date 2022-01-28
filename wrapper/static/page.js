@@ -210,7 +210,9 @@ module.exports = function (req, res, url) {
 	}
 	res.setHeader("Content-Type", "text/html; charset=UTF-8");
 	Object.assign(params.flashvars, query);
-	rpc.setActivity(rpcValue);
+	if (env.RPC == "y") {
+		rpc.setActivity(rpcValue);
+	}
 	// if you're seeing this, just know i hate doing this stuff - spark
 	res.end(`
 	<head>
