@@ -139,7 +139,7 @@ module.exports = function (req, res, url) {
 					appCode: "go",
 					page: "",
 					siteId: "go",
-					lid: 0,
+					lid: 13,
 					isLogin: "Y",
 					retut: 0,
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
