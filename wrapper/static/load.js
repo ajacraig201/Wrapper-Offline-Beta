@@ -61,7 +61,7 @@ module.exports = function (req, res, url) {
 							content = content.replace(/CREATE_CSS/g, '../css/create-light.css');
 							content = content.replace(/SWF_CSS/g, '../css/swf-light.css');
 						}
-						if (env.TRUNCATE_THEMES !== "y") {
+						if (env.TRUNCATE_THEMES == "n") {
 							content = content.replace(/<!--EXTRATHEME/g, '');
 							content = content.replace(/EXTRATHEME-->/g, '');
 						}

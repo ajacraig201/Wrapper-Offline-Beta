@@ -166,7 +166,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "F",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Amy",
 			"desc": "Amy (Cepstral)"
 		},
@@ -174,7 +174,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "F",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Belle",
 			"desc": "Belle"
 		},
@@ -182,7 +182,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "F",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Callie",
 			"desc": "Callie"
 		},
@@ -190,7 +190,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "M",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Charlie",
 			"desc": "Charlie (Cepstral)"
 		},
@@ -214,7 +214,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "M",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "David",
 			"desc": "David"
 		},
@@ -222,7 +222,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "F",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Diane",
 			"desc": "Diane"
 		},
@@ -270,7 +270,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "M",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Shouty",
 			"desc": "Shouty"
 		},
@@ -278,7 +278,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "M",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Walter",
 			"desc": "Walter"
 		},
@@ -286,7 +286,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "M",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "William",
 			"desc": "William"
 		},
@@ -294,7 +294,7 @@
 			"country": "US",
 			"language": "en",
 			"gender": "M",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Whispery",
 			"desc": "Whispery"
 		},
@@ -302,7 +302,7 @@
 			"country": "GB",
 			"language": "en",
 			"gender": "M",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Lawrence",
 			"desc": "Lawrence"
 		},
@@ -310,7 +310,7 @@
 			"country": "GB",
 			"language": "en",
 			"gender": "F",
-			"source": "voiceforge",
+			"source": "cepstral",
 			"arg": "Millie",
 			"desc": "Millie"
 		},
