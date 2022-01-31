@@ -9,18 +9,4 @@ endlocal
 
 :: Version number, build number and branch/build type
 set WRAPPER_VER=1.3.0
-set WRAPPER_BLD=10
 set WRAPPER_BRNCH=Beta
-
-:: Custom optional registration stuff
-
-:: Put your first name in place of "n".
-set FIRST_NAME=n
-:: Put your last name in place of "n".
-set LAST_NAME=n
-:: DO NOT TOUCH THIS VALUE
-set FULL_NAME=%FIRST_NAME% %LAST_NAME%
-:: Put your e-mail address in place of "n".
-set EMAIL=n
-:: Put your Discord tag in place of "n".
-set DISCORD=n
