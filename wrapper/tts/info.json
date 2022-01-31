@@ -1,12 +1,5 @@
 ﻿{
 	"voices": {
-		"import": {
-			"country": "",
-			"language": "any",
-			"gender": "M",
-			"source": "import",
-			"desc": "Custom Voice Clip"
-		},
 		"amy3": {
 			"country": "GB",
 			"language": "en",
