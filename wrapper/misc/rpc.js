@@ -54,7 +54,7 @@ module.exports = {
 if (env.RPC == "y") {
 	rpc.on("ready", () => {
 		rpc.setActivity({
-			state: 'Starting',
+			state: 'Waiting for RPC input...',
 			details: "Version " + version,
 			startTimestamp: new Date(),
 			largeImageKey: "icon",
