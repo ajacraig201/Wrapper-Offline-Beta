@@ -744,8 +744,6 @@ if exist .git (
 )
 echo Enter clr to clean up the screen
 echo Enter 0 to close Wrapper: Offline
-set /a _rand=(!RANDOM!*67/32768)+1
-if !_rand!==25 echo Enter things you think'll show a secret if you're feeling adventurous
 if !DEVMODE!==y (
 	echo:
 	echo Developer options:
