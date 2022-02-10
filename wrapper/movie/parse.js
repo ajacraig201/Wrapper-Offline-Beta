@@ -202,32 +202,37 @@ module.exports = {
 								break;
 							}
 							case 'char': {
-								const val = piece.childNamed('action').val;
-								const pieces = val.split('.');
+								var val = piece.childNamed("action").val;
+								var slices = val.split(".");
 
-								let theme, fileName, buffer;
-								switch (pieces[pieces.length - 1]) {
-									case 'xml': {
-										theme = pieces[0];
-										const id = pieces[1];
+								var theme, ccTheme, fileName, buffer;
+								switch (slices[slices.length - 1]) {
+									case "xml": {
+										theme = slices[0];
+										var id = slices[1];
+										fileName = `${theme}.char.${id}.xml`;
+										var prefix = id.substr(0, id.indexOf("-"));
 
-										try {
-											buffer = await char.load(id);
-											const charTheme = await char.getTheme(id);
-											fileName = `${theme}.char.${id}.xml`;
-											if (theme == 'ugc')
-												ugcString += `<char id="${id}"cc_theme_id="${charTheme}"><tags/></char>`;
-										} catch (e) {
-											console.log(e);
+										switch (prefix) {
+											case "C":
+												break;
+											case "c":
+											default:
+												try {
+													ccTheme = await char.getTheme(id);
+												} catch (e) {
+													ccTheme = "family";
+												}
+												break;
 										}
 										break;
 									}
-									case 'swf': {
-										theme = pieces[0];
-										const char = pieces[1];
-										const model = pieces[2];
-										const url = `${store}/${theme}/char/${char}/${model}.swf`;
-										fileName = `${theme}.char.${char}.${model}.swf`;
+									case "swf": {
+										var ch = slices[1];
+										var model = slices[2];
+										ccTheme = theme = slices[0];
+										var url = `${store}/${theme}/char/${ch}/${model}.swf`;
+										fileName = `${theme}.char.${ch}.${model}.swf`;
 										buffer = await get(url);
 										break;
 									}
