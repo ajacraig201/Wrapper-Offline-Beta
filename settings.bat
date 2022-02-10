@@ -133,7 +133,7 @@ if !DEVMODE!==y (
 )
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    echo ^(10^) Original LVM character IDs are[91m OFF [0m
+    echo ^(9^) Original LVM character IDs are[91m OFF [0m
 )
 
 if !DEVMODE!==y (
@@ -316,8 +316,8 @@ if "!choice!"=="?8" (
 )
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-    if "!choice!"=="10" goto extractchars
-    if "!choice!"=="?10" (
+    if "!choice!"=="9" goto extractchars
+    if "!choice!"=="?9" (
         echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
         echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
         echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,
