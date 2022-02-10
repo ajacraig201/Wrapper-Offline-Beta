@@ -152,13 +152,13 @@ module.exports = (voiceName, text) => {
 			}
 			case "voiceforge": {
 				/* Special thanks to ItsCrazyScout for helping us find the new VoiceForge link! */
-				var q = qs.encode({
+				var q = new URLSearchParams({
 					voice: voice.arg,
 					msg: text,
-				});
+				}).toString();
 				http.get(
 					{
-						host: "localhost",
+						host: "127.0.0.1",
 						port: "8181",
 						path: `/vfproxy/speech.php?${q}`,
 					},
