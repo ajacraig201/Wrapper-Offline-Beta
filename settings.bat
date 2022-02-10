@@ -392,7 +392,7 @@ echo:>> !tmpcfg!
 more +!afterline! !cfg!>> !tmpcfg!
 :: Make our temp file the normal file
 copy /y !tmpcfg! !cfg! >nul
-del !tmpcfg!-
+del !tmpcfg!
 :: Set in here for displaying
 set !totoggle!=!toggleto!
 if "!isenv!"=="1" (
@@ -428,7 +428,7 @@ if !BACKTOCUSTOMTOGGLE!==y goto backtocustom
 if !BACKTOCUSTOMTOGGLE2!==y goto backtocustom2
 goto optionscreen
 
-:: Change port number for frontend of Wrapper: Offline (dev option)
+:: Change port number for frontend of Wrapper: Offline
 :changeportnumber
 echo Which port number would you like to change the frontend to?
 echo:

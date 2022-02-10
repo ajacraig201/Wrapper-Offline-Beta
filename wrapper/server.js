@@ -1,6 +1,14 @@
+/***
+ * start wrapper: offline's server
+ */
+// assign config and env.json stuff to process.env
 const env = Object.assign(process.env, require("./env"), require("./config"));
-
 const http = require("http");
+const url = require("url");
+
+/**
+ * routes
+ */
 const chr = require("./character/redirect");
 const pmc = require("./character/premade");
 const chl = require("./character/load");
@@ -24,19 +32,20 @@ const thl = require("./theme/load");
 const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
 const rpc = require("./misc/rpc");
-const url = require("url");
-
 const functions = [mvL, pmc, asl, chl, thl, thL, chs, chu, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl, rpc];
 
-// Creates an HTTP server
+/**
+ * create the server
+ */
 module.exports = http
 	.createServer((req, res) => {
 		try {
 			const parsedUrl = url.parse(req.url, true);
-			//if (!parsedUrl.path.endsWith('/')) parsedUrl.path += '/';
+			// run each route function until the correct one is found
 			const found = functions.find((f) => f(req, res, parsedUrl));
+			// log every request
 			console.log(req.method, parsedUrl.path);
-			if (!found) {
+			if (!found) { // page not found
 				res.statusCode = 404;
 				res.end();
 			}
@@ -45,4 +54,4 @@ module.exports = http
 			res.end();
 		}
 	})
-	.listen(env.PORT || env.SERVER_PORT, console.log());
+	.listen(env.PORT || env.SERVER_PORT, console.log("Wrapper: Offline has started."));
