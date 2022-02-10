@@ -18,43 +18,54 @@ module.exports = (voiceName, text) => {
 	return new Promise(async (res, rej) => {
 		const voice = voices[voiceName];
 		switch (voice.source) {
-			case "polly+azure": {
+			// polly voices
+			case "polly": {
+				/**
+				 * Does a POST request to https://pollyvoices.com/.
+				 * The response is a redirect to /play/(id).mp3.
+				 * Then it gets the redirect link and removes the "/play" part and requests that URL, which returns the file.
+				 * 
+				 * Example: (path - method - data - headers (optional))
+				 * / - POST - text=(text)&voice=(voice)
+				 * 	   Redirected to /play/(id)
+				 * /(id) - GET
+				 *     File
+				 */
+				const params = new URLSearchParams({
+					"text": text,
+					"voice": voice.arg
+				}).toString();
 				var req = https.request(
 					{
-						hostname: "voicemaker.in",
+						hostname: "pollyvoices.com",
 						port: "443",
-						path: "/voice/standard",
+						path: "/",
 						method: "POST",
 						headers: {
-							"content-type": "application/json",
-							cookie:
-								"__stripe_mid=0a37ccc8-cc13-474d-97da-aa0a5f9f47398bdf7a; __cfduid=d022698980296baa7fa7313e4cf44f5631616037532; connect.sid=s%3AgvSXg1g2nPq-07vxD25_STJDMnFVSydC.CnUtht28g%2BsJ8NMGhRQeB0oBrs5W5kCD8pOI4MPJeDw; __stripe_sid=2dd1624f-ae48-472a-b598-b7d5cab469ecc72729",
-							"csrf-token": "",
-							origin: "https://voicemaker.in",
-							referer: "https://voicemaker.in/",
-							"user-agent":
-								"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36",
-							"x-requested-with": "XMLHttpRequest",
+							"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+							"Content-Type": "application/x-www-form-urlencoded",
+							"Host": "pollyvoices.com",
+							"Origin": "https://pollyvoices.com",
+							"Referer": "https://pollyvoices.com/",
+							"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0",
 						},
 					},
 					(r) => {
-						var buffers = [];
-						r.on("data", (b) => buffers.push(b));
-						r.on("end", () => {
-							var json = JSON.parse(Buffer.concat(buffers));
-							get(`https://voicemaker.in/${json.path}`).then(res).catch(rej);
-						});
-						r.on("error", rej);
+						const file = r.headers.location.substring(6)
+						r.on("data", (b) => {
+							get(`https://pollyvoices.com/${file}`)
+								.then(buffer => res(buffer, voice.desc))
+								.catch(err => rej(err))
+						})
+						r.on("error", (err) => rej("Unable to generate TTS. Please check your internet connection."))
 					}
-				);
-				req.write(
-					`{"Engine":"${voice.speech_engine}","Provider":"${voice.ai}","OutputFormat":"mp3","VoiceId":"${voice.arg}","LanguageCode":"${voice.language}-${voice.country}","SampleRate":"${voice.samplerate}","effect":"default","master_VC":"advanced","speed":"0","master_volume":"0","pitch":"0","Text":"${text}","TextType":"text","fileName":""}`
-				);
-				req.end();
-				break;
+				)
+				req.write(params)
+				req.end()
 			}
-			/* WARNING: NUANCE TTS API HAS BACKGROUND MUSIC */
-			/* so then WHY do we have it??????? i'm removing this. */
+			// WARNING: NUANCE TTS API HAS BACKGROUND MUSIC ~keegan
+			// so then WHY do we have it??????? i'm removing this. ~spark
+			// todo: add the nuance.com api ~tetra
 			
 			/* case "nuance": {
 				var q = qs.encode({

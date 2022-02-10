@@ -1,9 +1,9 @@
 /***
  * character uploading
  */
-const formidable = require('formidable');
-const character = require('./main');
-const fs = require('fs');
+const formidable = require("formidable");
+const fs = require("fs");
+const character = require("./main");
 
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/upload_character") return;
@@ -17,7 +17,7 @@ module.exports = function (req, res, url) {
 					.then(themeId => { // get char theme
 						res.statusCode = 302;
 						const url = `/cc?themeId=${themeId}&original_asset_id=${id}`
-						res.setHeader('Location', url);
+						res.setHeader("Location", url);
 						res.end();
 					});
 			})
