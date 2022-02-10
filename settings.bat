@@ -131,8 +131,6 @@ if !DEVMODE!==y (
 ) else ( 
 	echo ^(8^) Developer mode is[91m OFF [0m
 )
-:: View software info
-echo ^(9^) View software information
 :: Character solid archive
 if exist "server\characters\characters.zip" (
     echo ^(10^) Original LVM character IDs are[91m OFF [0m
@@ -314,35 +312,6 @@ if "!choice!"=="?8" (
 	echo mods for Wrapper: Offline, mostly the mods having to do with the batch script.
 	echo:
 	echo The developer settings will be visible both in these settings and in the Wrapper launcher.
-	goto reaskoptionscreen
-)
-if "!choice!"=="9" (
-	cls
-	echo Wrapper: Offline
-	echo Version !WRAPPER_VER! Beta
-	echo:
-	echo This copy of Wrapper: Offline belongs to:
-	if not %FIRST_NAME%==n (
-		if not %LAST_NAME%==n (
-			echo %FULL_NAME% ^(User: %USERNAME%^)
-		)
-	) else (
-		echo User: %USERNAME%
-	)
-	echo Machine ID: %COMPUTERNAME%
-	echo:
-	echo ^(DEV TIP: Interested in registering your copy of W:O under
-	echo your name? Open "utilities\metadata.bat" in a text editor and
-	echo edit any of the necessary values to your liking. This process
-	echo will be automated in the near future.^)
-	echo:
-	pause
-	goto optionscreen
-)
-if "!choice!"=="?9" (
-	echo This option exists to view any software and existing license info
-	echo for this copy of Wrapper: Offline. It helps show the user if they're
-	echo running the beta build or the stable build.
 	goto reaskoptionscreen
 )
 :: Character solid archive
