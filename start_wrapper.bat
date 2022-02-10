@@ -774,20 +774,12 @@ if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
 if /i "!choice!"=="clear" goto wrapperstartedcls
 :: dev options
-if !DEVMODE!==y (
-	if /i "!choice!"=="server" goto open_server
-	if /i "!choice!"=="amnesia" goto wipe_save
-	if /i "!choice!"=="restart" goto restart
-	if /i "!choice!"=="reload" goto reload_settings
-	if /i "!choice!"=="folder" goto open_files
-)
-if !DEVMODE!==n (
-	if /i "!choice!"=="server" goto open_server
-	if /i "!choice!"=="amnesia" goto devmodeerror
-	if /i "!choice!"=="restart" goto devmodeerror
-	if /i "!choice!"=="reload" goto devmodeerror
-	if /i "!choice!"=="folder" goto devmodeerror
-)
+if /i "!choice!"=="server" goto open_server
+if /i "!choice!"=="amnesia" goto wipe_save
+if /i "!choice!"=="restart" goto restart
+if /i "!choice!"=="reload" goto reload_settings
+if /i "!choice!"=="folder" goto open_files
+
 echo Time to choose. && goto wrapperidle
 
 :reopen_webpage	
@@ -880,13 +872,6 @@ if !VERBOSEWRAPPER!==y (
 )
 start "" /wait /B "%~F0" point_insertion
 exit
-
-:devmodeerror
-echo You have to have developer mode on
-echo in order to access these features.
-echo:
-echo Please turn developer mode on in the settings, then try again.
-goto wrapperidle
 
 ::::::::::::::
 :: Shutdown ::
