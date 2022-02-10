@@ -15,11 +15,11 @@ module.exports = function (req, res, url) {
 				character
 					.getTheme(id)
 					.then(themeId => { // get char theme
-					res.statusCode = 302;
-					const url = `/cc?themeId=${themeId}&original_asset_id=${id}`
-					res.setHeader('Location', url);
-					res.end();
-				});
+						res.statusCode = 302;
+						const url = `/cc?themeId=${themeId}&original_asset_id=${id}`
+						res.setHeader('Location', url);
+						res.end();
+					});
 			})
 			.catch(() => res.end(`10`))
 	});
