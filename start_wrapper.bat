@@ -920,7 +920,7 @@ if !VERBOSEWRAPPER!==y (
 		)
 	)
 	if !DRYRUN!==n ( 
-		if !INCLUDEDf!==y ( 
+		if !INCLUDEDCHROMIUM!==y ( 
 			TASKKILL /IM chromium.exe /F >nul 2>&1
 		)
 		if !INCLUDEDBASILISK!==y ( 
