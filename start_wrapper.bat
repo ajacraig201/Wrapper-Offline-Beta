@@ -583,7 +583,7 @@ if !HTTPSCERT_DETECTED!==n (
 				)
 			) else (
 				pushd utilities\ungoogled-chromium
-				start chrome.exe --user-data-dir=the_profile https://localhost:4664/certbypass.html --allow-outdated-plugins >nul
+				start chromium.exe --user-data-dir=the_profile https://localhost:4664/certbypass.html --allow-outdated-plugins >nul
 				popd
 			)
 			pause
@@ -920,7 +920,7 @@ if !VERBOSEWRAPPER!==y (
 		)
 	)
 	if !DRYRUN!==n ( 
-		if !INCLUDEDCHROMIUM!==y ( 
+		if !INCLUDEDf!==y ( 
 			TASKKILL /IM chromium.exe /F >nul 2>&1
 		)
 		if !INCLUDEDBASILISK!==y ( 
