@@ -43,7 +43,7 @@ function name2Font(font) {
 		case "Mia's Scribblings ~":
 			return "FontFileMia";
 		case "Coming Soon":
-			return "FontFileCSoon";;
+			return "FontFileCSoon";
 		case "Lilita One":
 			return "FontFileLOne";
 		case "Telex Regular":
