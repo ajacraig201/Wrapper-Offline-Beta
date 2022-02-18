@@ -1044,8 +1044,8 @@ goto returnfromconfigcopy
 :envcopy
 	set ENV=wrapper\env.json
 	echo {>> !env!
-	echo 	"CHAR_BASE_URL": "https://localhost:4664/characters",>> !env!
-	echo 	"THUMB_BASE_URL": "https://localhost:4664/thumbnails",>> !env!
+	echo 	"CHAR_BASE_URL": "https://127.0.0.1:4664/characters",>> !env!
+	echo 	"THUMB_BASE_URL": "https://127.0.0.1:4664/thumbnails",>> !env!
 	echo 	"XML_HEADER": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",>> !env!
 	echo 	"CROSSDOMAIN": "<cross-domain-policy><allow-access-from domain=\"*\"/></cross-domain-policy>",>> !env!
 	echo 	"FILE_WIDTH": 1000,>> !env!
