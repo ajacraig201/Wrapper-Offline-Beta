@@ -1,70 +1,52 @@
-const RPC = require("discord-rpc");
-const http = require("http");
-
-// env.json variables
+/***
+ * discord rich presence
+ */
+// get version number
 const version = process.env.WRAPPER_VER;
+const http = require("http");
+const rpc = process.env.drpc;
 
-// Discord rich presence
-const rpc = new RPC.Client({
-	transport: "ipc"
-});
-
-module.exports = {
-	setActivity(page) {
-		if (env.RPC == "y") {
-			switch (page) {
-				case "vl": { 
-					var state = 'Video List'; 
-					break; 
-				}
-				case "vm": { 
-					var state = 'Making a Video'; 
-					break; 
-				}
-				case "cc": { 
-					var state = 'Creating a Character'; 
-					break; 
-				}
-				case "ccb": { 
-					var state = 'Browsing Characters'; 
-					break; 
-				}
-				case "vp": { 
-					var state = 'Watching a Video'; 
-					break; 
-				}
-			}
-			// Sets RPC activity
-			rpc.setActivity({
-				state: state,
-				details: "Version " + version,
-				startTimestamp: new Date(),
-				largeImageKey: "icon",
-				largeImageText: "Wrapper: Offline",
-				smallImageKey: "Wrapper: Offline",
-				smallImagetext: "Wrapper: Offline",
-			});
-		}
-	}
-}
-
-if (env.RPC == "y") {
-	rpc.on("ready", () => {
-		rpc.setActivity({
-			state: 'Waiting for RPC input...',
-			details: "Version " + version,
-			startTimestamp: new Date(),
-			largeImageKey: "icon",
-			largeImageText: "Wrapper: Offline",
-			smallImageKey: "Wrapper: Offline",
-			smallImagetext: "Wrapper: Offline",
-		});
+function setActivity(text) { // sets rpc activity
+	rpc.setActivity({
+		state: text,
+		details: `Version ${version}`,
+		startTimestamp: new Date(),
+		largeImageKey: "icon",
+		largeImageText: "Wrapper: Offline",
+		smallImageKey: "Wrapper: Offline",
+		smallImagetext: "Wrapper: Offline",
 	});
 }
-// Connects RPC to app
-if (env.RPC == "y") {
-	// connect rpc to app
-	rpc
-		.login({ clientId: "866340172874383370" })
-		.catch((e) => console.log("RPC connection failed."));
+
+module.exports = function (req, res, url) {
+	if (process.env.RPC != "y") return;
+	
+	switch (url.path) {
+		case "/pages/html/create.html":
+		case "/pages/html/list.html":
+		case "/index.html":
+		case "/": {
+			setActivity("Idle");
+			break;
+		}
+		case "/go_full": {
+			setActivity("Video Editor");
+			break;
+		}
+		case "/player": {
+			setActivity("Video Player");
+			break;
+		}
+		case "/cc": {
+			setActivity("Character Creator");
+			break;
+		}
+		case "/cc_browser": {
+			setActivity("Character Browser");
+			break;
+		}
+		default: {
+			return;
+		}
+	}
 }
