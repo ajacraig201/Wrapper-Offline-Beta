@@ -1,11 +1,8 @@
 const RPC = require("discord-rpc");
 const http = require("http");
 
-// Loads env.json for Wrapper version and build number
-const env = Object.assign(process.env,
-	require('../env'));
 // env.json variables
-let version = env.WRAPPER_VER;
+const version = process.env.WRAPPER_VER;
 
 // Discord rich presence
 const rpc = new RPC.Client({
@@ -66,12 +63,8 @@ if (env.RPC == "y") {
 }
 // Connects RPC to app
 if (env.RPC == "y") {
-	try {
-		rpc.login({
-			clientId: "866340172874383370"
-		});
-		console.log('Rich presence is on!')
-	} catch (e) {
-		console.log(e);
-	}
+	// connect rpc to app
+	rpc
+		.login({ clientId: "866340172874383370" })
+		.catch((e) => console.log("RPC connection failed."));
 }
