@@ -5,6 +5,9 @@
 require("./server");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of a1625064 (Update main.js)
 
 /**
  * rich presence
@@ -34,7 +37,10 @@ if (process.env.RPC && process.env.RPC == "y") {
 		.login({ clientId: "866340172874383370" })
 		.catch((e) => console.log("RPC connection failed."));
 }
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 97ceef0c (Update main.js)
 =======
 >>>>>>> parent of 97ceef0c (Update main.js)
+=======
+>>>>>>> parent of a1625064 (Update main.js)
