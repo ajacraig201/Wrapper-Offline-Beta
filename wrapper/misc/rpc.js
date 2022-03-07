@@ -25,6 +25,7 @@ const http = require("http");
 // Loads env.json for Wrapper version and build number
 const env = Object.assign(process.env,
 	require('../env'));
+<<<<<<< HEAD
 // env.json variables
 let version = env.WRAPPER_VER;
 >>>>>>> parent of 625136aa (better)
@@ -36,8 +37,10 @@ const http = require("http");
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
 
+=======
+>>>>>>> parent of 625136aa (better)
 // env.json variables
-const version = process.env.WRAPPER_VER;
+let version = env.WRAPPER_VER;
 
 // Discord rich presence
 const rpc = new RPC.Client({
@@ -125,10 +128,13 @@ if (env.RPC == "y") {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
 >>>>>>> parent of 7f139607 (Update rpc.js)
+=======
+>>>>>>> parent of 625136aa (better)
 	try {
 		rpc.login({
 			clientId: "866340172874383370"
@@ -137,6 +143,7 @@ if (env.RPC == "y") {
 	} catch (e) {
 		console.log(e);
 	}
+<<<<<<< HEAD
 }
 >>>>>>> parent of 625136aa (better)
 <<<<<<< HEAD
@@ -145,6 +152,8 @@ if (env.RPC == "y") {
 	rpc
 		.login({ clientId: "866340172874383370" })
 		.catch((e) => console.log("RPC connection failed."));
+=======
+>>>>>>> parent of 625136aa (better)
 }
 >>>>>>> parent of 6304cbfa (updated rpc)
 =======
