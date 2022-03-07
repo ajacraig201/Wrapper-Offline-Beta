@@ -3,21 +3,6 @@
  */
 // start server
 require("./server");
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of a1625064 (Update main.js)
-=======
->>>>>>> parent of fa63e302 (Update main.js)
-=======
->>>>>>> parent of a1625064 (Update main.js)
-=======
->>>>>>> parent of a1625064 (Update main.js)
 
 /**
  * rich presence
@@ -47,21 +32,3 @@ if (process.env.RPC && process.env.RPC == "y") {
 		.login({ clientId: "866340172874383370" })
 		.catch((e) => console.log("RPC connection failed."));
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 97ceef0c (Update main.js)
-<<<<<<< HEAD
-=======
->>>>>>> parent of 97ceef0c (Update main.js)
-=======
->>>>>>> parent of a1625064 (Update main.js)
-=======
->>>>>>> parent of fa63e302 (Update main.js)
-=======
->>>>>>> parent of 97ceef0c (Update main.js)
-=======
->>>>>>> parent of a1625064 (Update main.js)
-=======
->>>>>>> parent of a1625064 (Update main.js)
