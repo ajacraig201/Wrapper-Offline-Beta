@@ -1,6 +1,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of d9366706 (Update rpc.js)
 /***
  * discord rich presence
  */
@@ -8,6 +11,7 @@
 const version = process.env.WRAPPER_VER;
 const http = require("http");
 const rpc = process.env.drpc;
+<<<<<<< HEAD
 =======
 const RPC = require("discord-rpc");
 const http = require("http");
@@ -22,6 +26,8 @@ let version = env.WRAPPER_VER;
 const RPC = require("discord-rpc");
 const http = require("http");
 >>>>>>> parent of 6304cbfa (updated rpc)
+=======
+>>>>>>> parent of d9366706 (Update rpc.js)
 
 // env.json variables
 const version = process.env.WRAPPER_VER;
@@ -80,6 +86,7 @@ module.exports = {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of 6304cbfa (updated rpc)
@@ -125,3 +132,5 @@ if (env.RPC == "y") {
 >>>>>>> parent of 6304cbfa (updated rpc)
 =======
 >>>>>>> parent of 6304cbfa (updated rpc)
+=======
+>>>>>>> parent of d9366706 (Update rpc.js)
