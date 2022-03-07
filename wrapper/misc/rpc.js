@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
 =======
@@ -60,39 +61,58 @@ function setActivity(text) { // sets rpc activity
 	});
 }
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
+=======
+const RPC = require("discord-rpc");
+const http = require("http");
 
-module.exports = function (req, res, url) {
-	if (process.env.RPC != "y") return;
-	
-	switch (url.path) {
-		case "/pages/html/create.html":
-		case "/pages/html/list.html":
-		case "/index.html":
-		case "/": {
-			setActivity("Idle");
-			break;
-		}
-		case "/go_full": {
-			setActivity("Video Editor");
-			break;
-		}
-		case "/player": {
-			setActivity("Video Player");
-			break;
-		}
-		case "/cc": {
-			setActivity("Character Creator");
-			break;
-		}
-		case "/cc_browser": {
-			setActivity("Character Browser");
-			break;
-		}
-		default: {
-			return;
+// env.json variables
+const version = process.env.WRAPPER_VER;
+>>>>>>> parent of 6304cbfa (updated rpc)
+
+// Discord rich presence
+const rpc = new RPC.Client({
+	transport: "ipc"
+});
+
+module.exports = {
+	setActivity(page) {
+		if (env.RPC == "y") {
+			switch (page) {
+				case "vl": { 
+					var state = 'Video List'; 
+					break; 
+				}
+				case "vm": { 
+					var state = 'Making a Video'; 
+					break; 
+				}
+				case "cc": { 
+					var state = 'Creating a Character'; 
+					break; 
+				}
+				case "ccb": { 
+					var state = 'Browsing Characters'; 
+					break; 
+				}
+				case "vp": { 
+					var state = 'Watching a Video'; 
+					break; 
+				}
+			}
+			// Sets RPC activity
+			rpc.setActivity({
+				state: state,
+				details: "Version " + version,
+				startTimestamp: new Date(),
+				largeImageKey: "icon",
+				largeImageText: "Wrapper: Offline",
+				smallImageKey: "Wrapper: Offline",
+				smallImagetext: "Wrapper: Offline",
+			});
 		}
 	}
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -108,6 +128,8 @@ module.exports = function (req, res, url) {
 =======
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
+=======
+>>>>>>> parent of 6304cbfa (updated rpc)
 
 if (env.RPC == "y") {
 	rpc.on("ready", () => {
@@ -124,6 +146,7 @@ if (env.RPC == "y") {
 }
 // Connects RPC to app
 if (env.RPC == "y") {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -148,10 +171,13 @@ if (env.RPC == "y") {
 >>>>>>> parent of 625136aa (better)
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 6304cbfa (updated rpc)
 	// connect rpc to app
 	rpc
 		.login({ clientId: "866340172874383370" })
 		.catch((e) => console.log("RPC connection failed."));
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 625136aa (better)
 }
@@ -160,3 +186,6 @@ if (env.RPC == "y") {
 >>>>>>> parent of d9366706 (Update rpc.js)
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
+=======
+}
+>>>>>>> parent of 6304cbfa (updated rpc)
