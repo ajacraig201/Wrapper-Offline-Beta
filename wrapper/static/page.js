@@ -1,6 +1,5 @@
 const fUtil = require("../misc/file");
 const stuff = require("./info");
-const rpc = require("../misc/rpc");
 const http = require("http");
 const env = require("../env");
 
@@ -50,7 +49,6 @@ module.exports = function (req, res, url) {
 	switch (url.pathname) {
 		case "/cc": {
 			title = 'Character Creator';
-			rpcValue = "cc";
 			attrs = {
 				data: process.env.SWF_URL + '/cc.swf', // data: 'cc.swf',
 				type: 'application/x-shockwave-flash', 
@@ -83,7 +81,6 @@ module.exports = function (req, res, url) {
 
 		case "/cc_browser": {
 			title = "Character Browser";
-			rpcValue = "ccb";
 			attrs = {
 				data: process.env.SWF_URL + "/cc_browser.swf", // data: 'cc_browser.swf',
 				type: "application/x-shockwave-flash",
@@ -122,7 +119,6 @@ module.exports = function (req, res, url) {
 					? query.movieId
 					: `m-${fUtil[query.noAutosave ? "getNextFileId" : "fillNextFileId"]("movie-", ".xml")}`;
 			title = "Video Editor";
-			rpcValue = "vm";
 			attrs = {
 				data: process.env.SWF_URL + "/go_full.swf",
 				type: "application/x-shockwave-flash",
@@ -160,7 +156,6 @@ module.exports = function (req, res, url) {
 
 		case "/player": {
 			title = "Video Player";
-			rpcValue = "vp";
 			attrs = {
 				data: process.env.SWF_URL + "/player.swf",
 				type: "application/x-shockwave-flash",
@@ -181,38 +176,11 @@ module.exports = function (req, res, url) {
 			break;
 		}
 
-		case "/recordWindow": {
-			title = "Record Window";
-			rpcValue = "vp";
-			attrs = {
-				data: process.env.SWF_URL + "/player.swf",
-				type: "application/x-shockwave-flash",
-				id: "video_player",
-				quality: "medium",
-			};
-			params = {
-				flashvars: {
-					apiserver: "/",
-					storePath: process.env.STORE_URL + "/<store>",
-					ut: utoken,
-					autostart: 0,
-					isWide: 1,
-					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
-				},
-				allowScriptAccess: "always",
-				allowFullScreen: "true",
-			};
-			break;
-		}
-
 		default:
 			return;
 	}
 	res.setHeader("Content-Type", "text/html; charset=UTF-8");
 	Object.assign(params.flashvars, query);
-	if (env.RPC == "y") {
-		rpc.setActivity(rpcValue);
-	}
 	// if you're seeing this, just know i hate doing this stuff - spark
 	res.end(`
 	<head>
@@ -221,7 +189,7 @@ module.exports = function (req, res, url) {
 		</script>
 		<script src="/pages/js/stuff.js"></script>
 		<script>
-			if(window.location.pathname == '/player' || window.location.pathname == '/go_full' || window.location.pathname == '/recordWindow' || window.location.pathname == '/go_full/tutorial') {
+			if(window.location.pathname == '/player' || window.location.pathname == '/go_full' || window.location.pathname == '/go_full/tutorial') {
 				function hideHeader() {
 					$("#header").remove();
 				}
