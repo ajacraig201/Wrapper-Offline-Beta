@@ -5,12 +5,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
 >>>>>>> parent of 7f139607 (Update rpc.js)
+=======
+>>>>>>> parent of d9366706 (Update rpc.js)
 /***
  * discord rich presence
  */
@@ -18,6 +21,7 @@
 const version = process.env.WRAPPER_VER;
 const http = require("http");
 const rpc = process.env.drpc;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 const RPC = require("discord-rpc");
@@ -48,6 +52,8 @@ const rpc = new RPC.Client({
 	transport: "ipc"
 });
 =======
+=======
+>>>>>>> parent of d9366706 (Update rpc.js)
 
 function setActivity(text) { // sets rpc activity
 	rpc.setActivity({
@@ -112,6 +118,7 @@ module.exports = {
 		}
 	}
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -189,3 +196,5 @@ if (env.RPC == "y") {
 =======
 }
 >>>>>>> parent of 6304cbfa (updated rpc)
+=======
+>>>>>>> parent of d9366706 (Update rpc.js)
