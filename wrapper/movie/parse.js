@@ -457,7 +457,6 @@ module.exports = {
 					var hasHeader = buff.subarray(0, hLen / 2).toString() == header.substr(0, hLen / 2);
 					var start = buff.includes("file_name") ? buff.indexOf(".xml") + 6 : hasHeader ? hLen + 9 : 9;
 					xmlBuffers.push(Buffer.from(`<cc_char file_name='ugc.char.${id}.xml' x${buff.subarray(start)}`));
-					// TODO: fix character scaling
 				}
 
 				if (thumb) {
