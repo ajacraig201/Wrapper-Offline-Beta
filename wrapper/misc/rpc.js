@@ -9,6 +9,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
 =======
@@ -23,6 +24,8 @@
 >>>>>>> parent of 7f139607 (Update rpc.js)
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
 /***
  * discord rich presence
  */
@@ -46,6 +49,7 @@ let version = env.WRAPPER_VER;
 >>>>>>> parent of 625136aa (better)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 const RPC = require("discord-rpc");
 const http = require("http");
@@ -90,6 +94,8 @@ const version = process.env.WRAPPER_VER;
 >>>>>>> parent of 6304cbfa (updated rpc)
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
 
 function setActivity(text) { // sets rpc activity
 	rpc.setActivity({
@@ -102,12 +108,15 @@ function setActivity(text) { // sets rpc activity
 		smallImagetext: "Wrapper: Offline",
 	});
 }
+<<<<<<< HEAD
 =======
 // Discord rich presence
 const rpc = new RPC.Client({
 	transport: "ipc"
 });
 >>>>>>> parent of 7f139607 (Update rpc.js)
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
 
 module.exports = function (req, res, url) {
 	if (process.env.RPC != "y") return;
@@ -152,6 +161,7 @@ module.exports = function (req, res, url) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of 7f139607 (Update rpc.js)
@@ -164,6 +174,9 @@ module.exports = function (req, res, url) {
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
 >>>>>>> parent of 6304cbfa (updated rpc)
+=======
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
@@ -191,6 +204,7 @@ if (env.RPC == "y") {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
@@ -201,6 +215,8 @@ if (env.RPC == "y") {
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
 >>>>>>> parent of 7f139607 (Update rpc.js)
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
 	try {
 		rpc.login({
 			clientId: "866340172874383370"
@@ -212,6 +228,7 @@ if (env.RPC == "y") {
 <<<<<<< HEAD
 }
 >>>>>>> parent of 625136aa (better)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -240,3 +257,5 @@ if (env.RPC == "y") {
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
