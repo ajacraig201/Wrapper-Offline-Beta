@@ -10,6 +10,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
 =======
@@ -26,6 +27,8 @@
 >>>>>>> parent of d9366706 (Update rpc.js)
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
+=======
+>>>>>>> parent of 7f139607 (Update rpc.js)
 /***
  * discord rich presence
  */
@@ -64,6 +67,7 @@ const http = require("http");
 // env.json variables
 let version = env.WRAPPER_VER;
 
+<<<<<<< HEAD
 // Discord rich presence
 const rpc = new RPC.Client({
 	transport: "ipc"
@@ -110,6 +114,8 @@ function setActivity(text) { // sets rpc activity
 }
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 7f139607 (Update rpc.js)
 // Discord rich presence
 const rpc = new RPC.Client({
 	transport: "ipc"
@@ -162,6 +168,7 @@ module.exports = function (req, res, url) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of 7f139607 (Update rpc.js)
@@ -172,6 +179,9 @@ module.exports = function (req, res, url) {
 =======
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
+=======
+=======
+>>>>>>> parent of 7f139607 (Update rpc.js)
 =======
 >>>>>>> parent of 6304cbfa (updated rpc)
 =======
@@ -205,6 +215,7 @@ if (env.RPC == "y") {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
@@ -217,6 +228,8 @@ if (env.RPC == "y") {
 >>>>>>> parent of 7f139607 (Update rpc.js)
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
+=======
+>>>>>>> parent of 7f139607 (Update rpc.js)
 	try {
 		rpc.login({
 			clientId: "866340172874383370"
@@ -238,6 +251,7 @@ if (env.RPC == "y") {
 		.catch((e) => console.log("RPC connection failed."));
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 625136aa (better)
 }
@@ -247,6 +261,8 @@ if (env.RPC == "y") {
 =======
 >>>>>>> parent of 6ba7e693 (Update rpc.js)
 =======
+=======
+>>>>>>> parent of 7f139607 (Update rpc.js)
 =======
 >>>>>>> parent of 7f139607 (Update rpc.js)
 }
