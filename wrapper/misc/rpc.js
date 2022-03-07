@@ -2,8 +2,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
 /***
  * discord rich presence
  */
@@ -22,6 +25,7 @@ const env = Object.assign(process.env,
 // env.json variables
 let version = env.WRAPPER_VER;
 >>>>>>> parent of 625136aa (better)
+<<<<<<< HEAD
 =======
 const RPC = require("discord-rpc");
 const http = require("http");
@@ -44,42 +48,50 @@ const version = process.env.WRAPPER_VER;
 const rpc = new RPC.Client({
 	transport: "ipc"
 });
+=======
 
-module.exports = {
-	setActivity(page) {
-		if (env.RPC == "y") {
-			switch (page) {
-				case "vl": { 
-					var state = 'Video List'; 
-					break; 
-				}
-				case "vm": { 
-					var state = 'Making a Video'; 
-					break; 
-				}
-				case "cc": { 
-					var state = 'Creating a Character'; 
-					break; 
-				}
-				case "ccb": { 
-					var state = 'Browsing Characters'; 
-					break; 
-				}
-				case "vp": { 
-					var state = 'Watching a Video'; 
-					break; 
-				}
-			}
-			// Sets RPC activity
-			rpc.setActivity({
-				state: state,
-				details: "Version " + version,
-				startTimestamp: new Date(),
-				largeImageKey: "icon",
-				largeImageText: "Wrapper: Offline",
-				smallImageKey: "Wrapper: Offline",
-				smallImagetext: "Wrapper: Offline",
-			});
+function setActivity(text) { // sets rpc activity
+	rpc.setActivity({
+		state: text,
+		details: `Version ${version}`,
+		startTimestamp: new Date(),
+		largeImageKey: "icon",
+		largeImageText: "Wrapper: Offline",
+		smallImageKey: "Wrapper: Offline",
+		smallImagetext: "Wrapper: Offline",
+	});
+}
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
+
+module.exports = function (req, res, url) {
+	if (process.env.RPC != "y") return;
+	
+	switch (url.path) {
+		case "/pages/html/create.html":
+		case "/pages/html/list.html":
+		case "/index.html":
+		case "/": {
+			setActivity("Idle");
+			break;
+		}
+		case "/go_full": {
+			setActivity("Video Editor");
+			break;
+		}
+		case "/player": {
+			setActivity("Video Player");
+			break;
+		}
+		case "/cc": {
+			setActivity("Character Creator");
+			break;
+		}
+		case "/cc_browser": {
+			setActivity("Character Browser");
+			break;
+		}
+		default: {
+			return;
 		}
 	}
 }
@@ -87,11 +99,15 @@ module.exports = {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of 6304cbfa (updated rpc)
 =======
 >>>>>>> parent of 6304cbfa (updated rpc)
+=======
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
 
 if (env.RPC == "y") {
 	rpc.on("ready", () => {
@@ -110,6 +126,9 @@ if (env.RPC == "y") {
 if (env.RPC == "y") {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
 	try {
 		rpc.login({
 			clientId: "866340172874383370"
@@ -120,6 +139,7 @@ if (env.RPC == "y") {
 	}
 }
 >>>>>>> parent of 625136aa (better)
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> parent of 6304cbfa (updated rpc)
@@ -134,3 +154,5 @@ if (env.RPC == "y") {
 >>>>>>> parent of 6304cbfa (updated rpc)
 =======
 >>>>>>> parent of d9366706 (Update rpc.js)
+=======
+>>>>>>> parent of 6ba7e693 (Update rpc.js)
