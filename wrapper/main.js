@@ -3,6 +3,7 @@
  */
 // start server
 require("./server");
+<<<<<<< HEAD
 
 /**
  * rich presence
@@ -32,3 +33,5 @@ if (process.env.RPC && process.env.RPC == "y") {
 		.login({ clientId: "866340172874383370" })
 		.catch((e) => console.log("RPC connection failed."));
 }
+=======
+>>>>>>> parent of 97ceef0c (Update main.js)
