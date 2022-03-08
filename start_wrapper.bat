@@ -1067,7 +1067,6 @@ goto returnfromconfigcopy
 	echo 	"DARK_MODE": "!DARK_MODE!",>> !env!
 	echo 	"DEBUG_VM": "!DEBUG_VM!",>> !env!
 	echo 	"TRUNCATE_THEMES": "!TRUNCATE_THEMES!",>> !env!
-	echo 	"GOTEST": "ITALIAN">> !env!
 	echo }>> !env!
 goto returnfromenvcopy
 
