@@ -53,7 +53,7 @@ Wrapper: Offline credits:
 | GoTest334 (PL)    | Current Project Lead                               |
 | RegularSpark (HD) | Many things to come.                               |
 | tetradual (D)     | Bug fixes                                          |
-| Benson (D)        | Wrapper: Offline                                   |
+| Benson (D)        | Wrapper: Offline Original Founder                  |
 | NathanSaturnBOI   | Logo                                               |
 | Blukas/GoTube (D) | Import idea, Mega Comedy World 2                   |
 | VisualPlugin      | Text to speech voices                              |
