@@ -51,7 +51,7 @@ Wrapper: Offline credits:
 | Name              | Contribution                                       |
 | ----------------- | -------------------------------------------------- |
 | GoTest334 (PL)    | Current Project Lead                               |
-| RegularSpark (HD) | Many things to come.                               |
+| RegularSpark (D)  | Wrapper: Offline's Lead Developer                  |
 | tetradual (D)     | Bug fixes                                          |
 | Benson (D)        | Wrapper: Offline Original Founder                  |
 | NathanSaturnBOI   | Logo                                               |
